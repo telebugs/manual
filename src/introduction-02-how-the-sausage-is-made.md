@@ -7,20 +7,20 @@ source. See the [Software License Agreement][2]).
 
 Telebugs builds on these technologies:
 
-- **Ruby on Rails:** A Ruby web framework with decades behind it. Simple and
+- [**Ruby on Rails:**][3] A Ruby web framework with decades behind it. Simple and
   boring. No revolution needed here.
 
-- **Turbo:** This covers the set of tools that power modern Rails apps out of
+- [**Turbo:**][4] This covers the set of tools that power modern Rails apps out of
   the box. Thanks to Turbo (and the next item), Telebugs skips JavaScript
   frameworks entirely. Proven, simple, and easy to maintain.
 
-- **Stimulus:** Think of it as jQuery for 2025, but even simpler, since
+- [**Stimulus:**][5] Think of it as jQuery for 2025, but even simpler, since
   JavaScript has improved a lot.
 
-- **Solid Queue:** Handles background jobs, like sending error notifications.
+- [**Solid Queue:**][6] Handles background jobs, like sending error notifications.
   This lets Telebugs run without Redis. Fewer dependencies to deal with.
 
-- **SQLite:** The real MVP of the stack. A fantastic library that needs no
+- [**SQLite:**][7] The real MVP of the stack. A fantastic library that needs no
   introduction and almost zero administration.
 
 That’s it! Error processing really can be this simple.
@@ -37,3 +37,8 @@ that’s exactly the point.
 
 [1]: https://www.ruby-lang.org/en/
 [2]: /appendix-01-software-license-agreement.md
+[3]: https://rubyonrails.org/
+[4]: https://turbo.hotwired.dev/
+[5]: https://stimulus.hotwired.dev/
+[6]: https://github.com/rails/solid_queue
+[7]: https://sqlite.org/
