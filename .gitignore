@@ -1,4 +1,3 @@
-/book
 .DS_Store
 .env
 /config/deploy.yml

@@ -1,0 +1,2206 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>The Telebugs Manual</title>
+        <meta name="robots" content="noindex">
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="A guide to setting up and using Telebugs, a self-hosted Sentry alternative for error tracking.">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon-de23e50b.svg">
+        <link rel="shortcut icon" href="favicon-8114d1fc.png">
+        <link rel="stylesheet" href="css/variables-8adf115d.css">
+        <link rel="stylesheet" href="css/general-2459343d.css">
+        <link rel="stylesheet" href="css/chrome-ae938929.css">
+        <link rel="stylesheet" href="css/print-9e4910d8.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="fonts/fonts-9644e21d.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="mdbook-highlight-css" href="highlight-493f70e1.css">
+        <link rel="stylesheet" id="mdbook-tomorrow-night-css" href="tomorrow-night-4c0ae647.css">
+        <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="ayu-highlight-3fdfc3ac.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "searchindex-915c1993.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc-5f7dfe06.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="mdbook-body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="mdbook-sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("mdbook-sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="mdbook-sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="mdbook-sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="mdbook-page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="mdbook-menu-bar-hover-placeholder"></div>
+                <div id="mdbook-menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="mdbook-sidebar-toggle" class="icon-button" for="mdbook-sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="mdbook-sidebar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/></svg></span>
+                        </label>
+                        <button id="mdbook-theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="mdbook-theme-list">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M371.3 367.1c27.3-3.9 51.9-19.4 67.2-42.9L600.2 74.1c12.6-19.5 9.4-45.3-7.6-61.2S549.7-4.4 531.1 9.6L294.4 187.2c-24 18-38.2 46.1-38.4 76.1L371.3 367.1zm-19.6 25.4l-116-104.4C175.9 290.3 128 339.6 128 400c0 3.9 .2 7.8 .6 11.6c1.8 17.5-10.2 36.4-27.8 36.4H96c-17.7 0-32 14.3-32 32s14.3 32 32 32H240c61.9 0 112-50.1 112-112c0-2.5-.1-5-.2-7.5z"/></svg></span>
+                        </button>
+                        <ul id="mdbook-theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-ayu">Ayu</button></li>
+                        </ul>
+                        <button id="mdbook-search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="mdbook-searchbar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352c79.5 0 144-64.5 144-144s-64.5-144-144-144S64 128.5 64 208s64.5 144 144 144z"/></svg></span>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">The Telebugs Manual</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <span class=fa-svg id="print-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M128 0C92.7 0 64 28.7 64 64v96h64V64H354.7L384 93.3V160h64V93.3c0-17-6.7-33.3-18.7-45.3L400 18.7C388 6.7 371.7 0 354.7 0H128zM384 352v32 64H128V384 368 352H384zm64 32h32c17.7 0 32-14.3 32-32V256c0-35.3-28.7-64-64-64H64c-35.3 0-64 28.7-64 64v96c0 17.7 14.3 32 32 32H64v64c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V384zm-16-88c-13.3 0-24-10.7-24-24s10.7-24 24-24s24 10.7 24 24s-10.7 24-24 24z"/></svg></span>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="mdbook-search-wrapper" class="hidden">
+                    <form id="mdbook-searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="mdbook-searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="mdbook-searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <span class=fa-svg id="fa-spin"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M304 48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zm0 416c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM48 304c26.5 0 48-21.5 48-48s-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48zm464-48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM142.9 437c18.7-18.7 18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zm0-294.2c18.7-18.7 18.7-49.1 0-67.9S93.7 56.2 75 75s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zM369.1 437c18.7 18.7 49.1 18.7 67.9 0s18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9z"/></svg></span>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="mdbook-searchresults-outer" class="searchresults-outer hidden">
+                        <div id="mdbook-searchresults-header" class="searchresults-header"></div>
+                        <ul id="mdbook-searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('mdbook-sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('mdbook-sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#mdbook-sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="mdbook-content" class="content">
+                    <main>
+                        <h1 id="introduction"><a class="header" href="#introduction">Introduction</a></h1>
+<p><img src="assets/images/introduction-00/01.svg" alt="The Telebugs Manual cover"></p>
+<p><strong>Telebugs</strong> is a lightweight, self-hosted error tracking system and a seamless
+drop-in alternative to Sentry. It collects, groups, and notifies you about
+errors in your applications. This helps you fix bugs faster while keeping your
+data private and fully under your control.</p>
+<p>Telebugs is fully compatible with existing <a href="https://docs.sentry.io/">Sentry SDKs</a>. It works out of the
+box with popular languages and frameworks, including JavaScript (React, Vue,
+Angular, Svelte, Astro, Solid), Ruby on Rails, Laravel, Django, Go, .NET,
+ASP.NET Core, Swift, Spring Boot, and <a href="/appendix-03-supported-platforms.html">many more</a>.</p>
+<p>Unlike cloud-based services with recurring subscriptions and event quotas,
+Telebugs is a one-time purchase that you install on your own server:</p>
+<ul>
+<li>No monthly fees or hidden costs</li>
+<li>Unlimited errors, events, projects, and team members</li>
+<li>Complete data ownership and privacy with no third-party processing (perfect
+for GDPR, CCPA, or regulated industries)</li>
+<li>Simple Docker-based setup in about 5 minutes, with automatic SSL and updates</li>
+<li>Focused solely on error tracking: detailed reports, breadcrumbs, notifications
+(email and push), team collaboration with no unnecessary bloat</li>
+</ul>
+<p>This manual will guide you through installing Telebugs, setting up projects,
+integrating SDKs, and mastering its features to make your software more
+reliable.</p>
+<p>Let’s get started. Your errors won’t fix themselves!</p>
+<hr>
+<p><a href="https://telebugs.com">Telebugs home</a> | <a href="https://demo.telebugs.com">Live demo</a></p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="telebugs-philosophy"><a class="header" href="#telebugs-philosophy">Telebugs Philosophy</a></h1>
+<p>Telebugs adheres strictly to its guiding principles: <strong>simplicity</strong>,
+<strong>security</strong>, and <strong>user control</strong> in error tracking. This directly counters the
+pitfalls of modern SaaS tools, where providers lock basic features behind
+ever-increasing subscription costs.</p>
+<p>At its core, Telebugs is built on a straightforward idea: error tracking should
+be simple, secure, and fully under your control. This philosophy influences
+every decision—from design and features to deployment—ensuring the tool empowers
+developers without unnecessary complexity.</p>
+<h2 id="the-pillars-of-telebugs"><a class="header" href="#the-pillars-of-telebugs">The Pillars of Telebugs</a></h2>
+<p>Telebugs rests on five foundational pillars:</p>
+<h3 id="i-less-is-more"><a class="header" href="#i-less-is-more">I: Less is More</a></h3>
+<p>Error tracking does not need complex setups or long learning curves. Telebugs
+stays minimal on purpose. It is easy to install, easy to use, and easy to
+maintain. This approach runs through the whole system.</p>
+<h3 id="ii-be-boring"><a class="header" href="#ii-be-boring">II: Be Boring</a></h3>
+<p>Telebugs does not try to impress. It just works reliably every day. Good tools
+run quietly in the background. You never get excited about running <code>cd</code> to
+change directories. Telebugs aims for that same quiet reliability.</p>
+<h3 id="iii-own-your-data"><a class="header" href="#iii-own-your-data">III: Own Your Data</a></h3>
+<p>Big providers scare you with stories about data loss. They say files vanish
+without constant backups and replication. There is some truth to that. But they
+blow it out of proportion to keep you locked in. Backups matter, yet they are
+not as hard or scary as claimed. You can manage them yourself. No sysadmin
+required.</p>
+<h3 id="iv-freedom-to-scale"><a class="header" href="#iv-freedom-to-scale">IV: Freedom to Scale</a></h3>
+<p>You do not need Kubernetes for Telebugs, though it works if you want it. Start
+with the cheapest <a href="/appendix-05-installing-on-hetzner.html">Hetzner</a> VPS. Upgrade the
+server as your project grows. Telebugs will not scale forever, but it handles
+most indie projects, small teams, and medium businesses through their full
+lifecycle.</p>
+<h3 id="v-finished-software"><a class="header" href="#v-finished-software">V: Finished Software</a></h3>
+<p>Telebugs aims to be <a href="https://world.hey.com/dhh/finished-software-8ee43637">finished
+software</a>. It ships
+complete and stable, without endless new features. Not all tools need constant
+growth.</p>
+<p>Think about the <code>cd</code> command needing a subscription account. That would be
+ridiculous. Yet many modern tools end up there. They add more and more features,
+needed or not. Then they gate basic access behind paywalls or guest modes.
+Telebugs avoids that path. It provides what you need. Nothing more.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="how-the-sausage-is-made"><a class="header" href="#how-the-sausage-is-made">How the sausage is made</a></h1>
+<p>Telebugs uses proven and reliable technologies. Knowing the stack matters. When
+you buy Telebugs, you get the full source code. You own it for life. You can
+modify it any way you like (just don’t share it, since Telebugs is not open
+source. See the <a href="/appendix-01-software-license-agreement.html">Software License Agreement</a>).</p>
+<p>Telebugs builds on these technologies:</p>
+<ul>
+<li>
+<p><strong>Ruby on Rails:</strong> A Ruby web framework with decades behind it. Simple and
+boring. No revolution needed here.</p>
+</li>
+<li>
+<p><strong>Turbo:</strong> This covers the set of tools that power modern Rails apps out of
+the box. Thanks to Turbo (and the next item), Telebugs skips JavaScript
+frameworks entirely. Proven, simple, and easy to maintain.</p>
+</li>
+<li>
+<p><strong>Stimulus:</strong> Think of it as jQuery for 2025, but even simpler, since
+JavaScript has improved a lot.</p>
+</li>
+<li>
+<p><strong>Solid Queue:</strong> Handles background jobs, like sending error notifications.
+This lets Telebugs run without Redis. Fewer dependencies to deal with.</p>
+</li>
+<li>
+<p><strong>SQLite:</strong> The real MVP of the stack. A fantastic library that needs no
+introduction and almost zero administration.</p>
+</li>
+</ul>
+<p>That’s it! Error processing really can be this simple.</p>
+<p>So is Telebugs only for Rails devs? <em>No.</em> You never have to touch the code if you
+don’t want to. You can read it, sure. It’s pure Ruby. Probably the most readable
+programming syntax out there. It almost feels like English.</p>
+<p>Not familiar with <a href="https://www.ruby-lang.org/en/">Ruby</a>? Pair it with your favorite LLM and tweak away. That
+said, I don’t expect you to need that. Telebugs ships with everything essential.</p>
+<p>Telebugs isn’t here to change the world. It’s here to leave you alone. And
+that’s exactly the point.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="installation"><a class="header" href="#installation">Installation</a></h1>
+<p>Telebugs installs in under 5 minutes with a single command. The process stays
+simple on purpose.</p>
+<p>Before diving in, check the <a href="#prerequisites">prerequisites</a> and <a href="#system-requirements">system requirements</a>.
+Then follow the step-by-step guide.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="prerequisites"><a class="header" href="#prerequisites">Prerequisites</a></h1>
+<p>Telebugs is self-hosted. You need a few things ready before starting.</p>
+<ol>
+<li>Your own domain name (for example, example.com or telebugs.example.com).</li>
+<li>A machine connected to the internet.</li>
+<li>Basic tech skills (you should know how to use SSH and run terminal commands).</li>
+</ol>
+<blockquote>
+<p>New to self-hosting? No problem. The installer takes care of everything. It
+handles Docker installation, all configuration, and even the TLS certificate.
+You just run one command. Then sit back and have a cup of tea.</p>
+</blockquote>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="system-requirements"><a class="header" href="#system-requirements">System Requirements</a></h1>
+<p>Telebugs can run on almost any hardware. This includes a VPS, cloud server, home server, or even a Raspberry Pi. It supports both AMD64 (also known as x86-64, x64, x86_64, and Intel 64) and ARM64 (also known as AArch64) architectures. In short, if Docker runs on it, Telebugs will too.</p>
+<h2 id="supported-platforms"><a class="header" href="#supported-platforms">Supported Platforms</a></h2>
+<p>Telebugs works with over 100 programming languages and frameworks through Sentry SDKs. Popular options include JavaScript (Node.js, React, Angular), Python (Django, Flask), Ruby (Rails), Java (Spring), PHP (Laravel), .NET (ASP.NET Core), and Go. For the full list, see Supported Platforms in the appendix.</p>
+<h2 id="error-throughput"><a class="header" href="#error-throughput">Error Throughput</a></h2>
+<p>Use this table to estimate what your server can handle.</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>CPU cores</th><th>Est. max errors/second</th><th>Est. max errors/day</th></tr>
+</thead>
+<tbody>
+<tr><td>2</td><td>30</td><td>2,592,000</td></tr>
+<tr><td>4</td><td>60</td><td>5,184,000</td></tr>
+<tr><td>8</td><td>120</td><td>10,368,000</td></tr>
+<tr><td>16</td><td>240</td><td>20,736,000</td></tr>
+</tbody>
+</table>
+</div>
+<p>These numbers are rough estimates. Actual throughput depends on CPU, RAM, application complexity, and error volume. Throughput is shared across all projects in one Telebugs installation. With two projects, each gets about half. With four projects, each gets about a quarter, and so on.</p>
+<h2 id="recommended-minimum-specs"><a class="header" href="#recommended-minimum-specs">Recommended Minimum Specs</a></h2>
+<ul>
+<li><strong>RAM:</strong> 1 GB</li>
+<li><strong>Disk space:</strong> 40 GB</li>
+<li><strong>CPU:</strong> 1 core</li>
+</ul>
+<h2 id="recommended-specs-for-small-to-medium-projects"><a class="header" href="#recommended-specs-for-small-to-medium-projects">Recommended Specs for Small to Medium Projects</a></h2>
+<ul>
+<li><strong>RAM:</strong> 4 GB</li>
+<li><strong>Disk space:</strong> 80 GB</li>
+<li><strong>CPU:</strong> 3 cores</li>
+</ul>
+<h2 id="operating-system-compatibility"><a class="header" href="#operating-system-compatibility">Operating System Compatibility</a></h2>
+<ul>
+<li>Tested on Linux (Ubuntu, Debian, Alpine, Rocky) and any OS that supports Docker.</li>
+<li>Also works on macOS.</li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="installation-steps"><a class="header" href="#installation-steps">Installation Steps</a></h1>
+<p>The whole process takes less than 5 minutes. Here is how to get started.</p>
+<ol>
+<li>
+<p><strong>Choose a server.</strong> Pick a machine to host Telebugs (cloud or local). I
+recommend DigitalOcean (see the <a href="/appendix-04-installing-on-digital-ocean.html">DigitalOcean setup guide</a>) or Hetzner
+(see the <a href="/appendix-05-installing-on-hetzner.html">Hetzner setup guide</a>).</p>
+</li>
+<li>
+<p><strong>Point your domain.</strong> Update your DNS records so your domain points directly
+to your server IP. Do not use proxying. Telebugs handles TLS itself.</p>
+<p><img src="assets/images/installation-03-installation-steps/01.webp" alt="Cloudflare DNS configuration example"></p>
+</li>
+<li>
+<p><strong>Connect to your server.</strong> Use SSH or your provider console.</p>
+</li>
+<li>
+<p><strong>Run the installation command.</strong> Copy the command from your purchase email
+and paste it into the server terminal. Installation can take up to 5 minutes.</p>
+<p>Your personal command will look similar to this:</p>
+<pre><code class="language-bash">bash -c "$(curl -fsSL https://auth.telebugs.com/install/a12b-c34d-e56f-g78h)"
+</code></pre>
+<p><strong>Important:</strong> Keep your install command private. Do not share it or post it
+online. It is tied to your account and license. The purchase token is included
+in your email.</p>
+</li>
+</ol>
+<p>When you run this command, it will automatically install Docker on your server
+(assuming you’re using Linux, which is standard for most cloud environments). It
+will then download the latest version of the Telebugs app as a Docker container.
+During setup, you’ll be prompted to enter your domain name so we can generate a
+TLS certificate for you.</p>
+<p><img src="assets/images/installation-03-installation-steps/02.webp" alt="Successful Telebugs installation"></p>
+<p>That is it. Visit <code>https://YOUR-DOMAIN</code> in your browser to create the first
+user. After that, you can invite your team.</p>
+<p>Telebugs updates itself automatically every night at 1 AM (server local time).
+You can disable updates or run other admin tasks (backups, password resets,
+etc.) with the <a href="/appendix-02-telebugs-command-reference.html">telebugs command</a>. Connect to your server and run <code>telebugs</code>
+to see all options.</p>
+<blockquote>
+<p>💡 Want multiple Telebugs installations? You need a separate license for each domain.</p>
+</blockquote>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="custom-tls-certificates"><a class="header" href="#custom-tls-certificates">Custom TLS Certificates</a></h1>
+<p>Telebugs automatically creates and installs a Let’s Encrypt TLS certificate for
+you. If you already have your own certificate, you can use it instead.</p>
+<h2 id="tls-termination-with-nginx"><a class="header" href="#tls-termination-with-nginx">TLS Termination with Nginx</a></h2>
+<p><a href="https://nginx.org/">Nginx</a> is the recommended way to use a custom certificate. It works as a reverse
+proxy and handles TLS termination.</p>
+<p>During the <code>telebugs setup</code> command, leave the domain prompt empty and press
+Enter. This runs Telebugs on <code>http://localhost:5555</code> without TLS.</p>
+<ol>
+<li>
+<p>Install Nginx.</p>
+<pre><code class="language-sh">apt-get update
+apt-get install nginx
+</code></pre>
+</li>
+<li>
+<p>Create a config file at <code>/etc/nginx/sites-available/telebugs</code>.</p>
+<pre><code class="language-nginx">server {
+   listen 443 ssl;
+   server_name &lt;YOUR_DOMAIN&gt;;
+
+   ssl_certificate /path/to/your/fullchain.pem;
+   ssl_certificate_key /path/to/your/privkey.pem;
+
+   location / {
+       proxy_pass http://localhost:5555;
+       proxy_set_header Host $host;
+       proxy_set_header X-Real-IP $remote_addr;
+       proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+       proxy_set_header X-Forwarded-Proto $scheme;
+   }
+ }
+
+ server {
+   listen 80;
+   server_name &lt;YOUR_DOMAIN&gt;;
+   return 301 https://$host$request_uri;
+ }
+</code></pre>
+</li>
+<li>
+<p>Enable the config.</p>
+<pre><code class="language-sh">ln -s /etc/nginx/sites-available/telebugs /etc/nginx/sites-enabled/
+</code></pre>
+</li>
+<li>
+<p>Test and restart Nginx.</p>
+<pre><code class="language-sh">nginx -t
+systemctl restart nginx
+</code></pre>
+</li>
+</ol>
+<p>Nginx now handles your certificate and forwards traffic securely to Telebugs.</p>
+<h2 id="tls-termination-with-haproxy"><a class="header" href="#tls-termination-with-haproxy">TLS Termination with HAProxy</a></h2>
+<p><a href="https://www.haproxy.org/">HAProxy</a> is another solid option for custom certificates.</p>
+<p>Leave the domain prompt empty during setup, just like with Nginx.</p>
+<ol>
+<li>
+<p>Install HAProxy.</p>
+<pre><code class="language-sh">apt-get update
+apt-get install haproxy
+</code></pre>
+</li>
+<li>
+<p>Add this to <code>/etc/haproxy/haproxy.cfg</code>.</p>
+<pre><code>frontend https_frontend
+  bind *:443 ssl crt /path/to/your/certificate.pem
+  mode http
+  option httplog
+  default_backend telebugs_backend
+
+backend telebugs_backend
+  mode http
+  server telebugs_server localhost:5555 check
+  option http-server-close
+  http-request set-header X-Forwarded-Proto https
+  http-request set-header X-Forwarded-For %[src]
+  http-request set-header X-Forwarded-Host %[req.hdr(Host)]
+  http-request set-header X-Real-IP %[src]
+</code></pre>
+<p><strong>Note:</strong> The <code>certificate.pem</code> file must contain both the certificate and
+private key concatenated.</p>
+<p>For Let’s Encrypt:</p>
+<pre><code class="language-sh">cat fullchain.pem privkey.pem &gt; /etc/ssl/private/certificate.pem
+</code></pre>
+</li>
+<li>
+<p>Test and restart HAProxy.</p>
+<pre><code class="language-sh">haproxy -c -f /etc/haproxy/haproxy.cfg
+systemctl restart haproxy
+</code></pre>
+</li>
+</ol>
+<p>HAProxy now handles your certificate and forwards traffic to Telebugs.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="kubernetes-installation"><a class="header" href="#kubernetes-installation">Kubernetes Installation</a></h1>
+<p>You can install Telebugs on Kubernetes using <a href="https://github.com/telebugs/telebugs-helm-chart">the official Helm chart</a>.</p>
+<p>This option is not beginner-friendly. Use it only if you already know Kubernetes
+and Helm. For most users, follow <a href="/installation-03-installation-steps.html">the standard installation steps</a>.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="first-launch"><a class="header" href="#first-launch">First Launch</a></h1>
+<p>When you first visit your new Telebugs domain, you land on the setup screen.
+Here you create the initial admin account and get started right away.</p>
+<h2 id="create-your-first-user"><a class="header" href="#create-your-first-user">Create Your First User</a></h2>
+<p>The setup form is straightforward. It asks for:</p>
+<ul>
+<li><strong>Profile picture</strong> (optional). Shows up across the dashboard and to your teammates.</li>
+<li><strong>Full name</strong>. Anything you want.</li>
+<li><strong>Email address</strong>. Does not need to match your purchase email. Use whatever you prefer.</li>
+<li><strong>Password</strong>. Pick something strong. Telebugs trusts you to choose wisely. No forced rules.</li>
+</ul>
+<p>Click <strong>Create your account</strong>. That is it. You are now logged in and ready to use Telebugs.</p>
+<h2 id="fun-fact"><a class="header" href="#fun-fact">Fun Fact</a></h2>
+<p>The name field autocompletes with “Grace Hopper” as a small tribute.</p>
+<p><a href="https://en.wikipedia.org/wiki/Grace_Hopper">Grace Hopper</a> was a pioneering computer scientist and U.S. Navy rear admiral. In
+1947, her team found an actual moth stuck in a relay causing a computer
+malfunction. They taped it into the log book and noted they had “debugged” the
+machine. This is the origin of the term “bug” in computing.</p>
+<p>With Telebugs you carry on the tradition of finding and fixing bugs (without the
+physical moths).</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="creating-your-project"><a class="header" href="#creating-your-project">Creating Your Project</a></h1>
+<p>Projects are the core way to organize errors in Telebugs. Each project keeps
+errors from a specific app, language, or environment separate. Every project
+gets its own unique token that your code uses to send errors.</p>
+<p>This section covers recommended setup and organization tips.</p>
+<h2 id="how-to-organize-projects"><a class="header" href="#how-to-organize-projects">How to Organize Projects</a></h2>
+<p>Treat projects like folders for errors. Group them logically.</p>
+<p>Common approaches (mix them as needed):</p>
+<ul>
+<li><strong>By language or framework.</strong> One project for Ruby errors, another for
+JavaScript. Backend and frontend stay cleanly separated.</li>
+<li><strong>By subsystem.</strong> Split web requests, background jobs, or cron tasks if you
+want separate notifications or access.</li>
+<li><strong>By environment.</strong> Keep staging separate from production. Use clear names
+like “App-Prod” and “App-Staging”.</li>
+<li><strong>Custom setup.</strong> Put everything in one project or split by team. Telebugs
+does not enforce rules. Use what works for you.</li>
+</ul>
+<h3 id="grouping-with-apps"><a class="header" href="#grouping-with-apps">Grouping with Apps</a></h3>
+<p>If you have multiple related projects (most commonly a backend and a frontend),
+you can group them under one app. This keeps the dashboard tidy and makes
+navigation faster.</p>
+<p>See the <a href="/apps-00.html">Apps</a> section for details.</p>
+<h2 id="example-project-setup"><a class="header" href="#example-project-setup">Example Project Setup</a></h2>
+<p>Take a simple blog built with Ruby on Rails and some JavaScript on the frontend.</p>
+<ul>
+<li>
+<p><strong>Backend project</strong></p>
+<p>Name: <code>Blog</code> or <code>blog.example.com</code>
+Purpose: Catch server-side Ruby/Rails errors.</p>
+</li>
+<li>
+<p><strong>Frontend project</strong></p>
+<p>Name: <code>Blog (JavaScript)</code> or <code>blog.js</code>
+Purpose: Catch client-side errors.</p>
+</li>
+</ul>
+<p>This split lets you assign different team members, set separate alerts, and spot
+patterns faster.</p>
+<h2 id="creating-a-project"><a class="header" href="#creating-a-project">Creating a Project</a></h2>
+<p>Click <strong>New Project</strong> in the top-right of the dashboard.</p>
+<p>Fill in:</p>
+<ul>
+<li>A clear project name.</li>
+<li>The reporting timezone (defaults to your browser; change to server or team
+timezone if needed).</li>
+<li>The platform (sets the icon and tailors the integration guide).</li>
+</ul>
+<p>Copy the token after creation and add it to your code.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="sending-your-first-error-report"><a class="header" href="#sending-your-first-error-report">Sending Your First Error Report</a></h1>
+<p>You have a project. Now connect your app so Telebugs can start catching errors
+automatically.</p>
+<p>Telebugs uses compatible Sentry SDKs. This means you follow the official Sentry
+integration guide for your platform, but point it at your Telebugs DSN.</p>
+<h2 id="find-your-setup-instructions"><a class="header" href="#find-your-setup-instructions">Find Your Setup Instructions</a></h2>
+<p>Open your project in the dashboard. If no errors have arrived yet, Telebugs
+shows tailored SDK instructions right there. They include your exact DSN and
+link to the official Sentry docs for the platform you selected.</p>
+<p>The DSN is the unique URL that routes errors to this project. It looks like:</p>
+<pre><code>https://long-token@telebugs.app/123
+</code></pre>
+<p>Copy it carefully.</p>
+<h2 id="install-the-sdk"><a class="header" href="#install-the-sdk">Install the SDK</a></h2>
+<p>Add the Sentry SDK to your app. The process is the same as for Sentry itself.</p>
+<p>Example for Ruby on Rails:</p>
+<ol>
+<li>
+<p>Add to your Gemfile:</p>
+<pre><code class="language-ruby">gem "sentry-rails"
+</code></pre>
+</li>
+<li>
+<p>Run:</p>
+<pre><code class="language-sh">bundle install
+</code></pre>
+</li>
+<li>
+<p>Initialize it (usually in <code>config/initializers/sentry.rb</code>):</p>
+<pre><code class="language-rb">Sentry.init do |config|
+  config.dsn = "https://your-dsn@telebugs.app/123"
+end
+</code></pre>
+</li>
+<li>
+<p>Restart your app.</p>
+</li>
+</ol>
+<p>For JavaScript, Python, PHP, Go, etc., follow <a href="https://sentry.io/docs">the official Sentry guide</a> for your
+platform. Just replace the DSN with yours from Telebugs.</p>
+<h2 id="test-the-connection"><a class="header" href="#test-the-connection">Test the Connection</a></h2>
+<p>Trigger a test error in your code. Examples:</p>
+<ul>
+<li>Ruby: <code>raise "Test error from Telebugs"</code></li>
+<li>JavaScript: <code>Sentry.captureException(new Error("Test"))</code></li>
+</ul>
+<p>The error should appear in your Telebugs project within seconds.</p>
+<p>If nothing shows up:</p>
+<ul>
+<li>Double-check the DSN (copy-paste again).</li>
+<li>Make sure the SDK initializes early in your app lifecycle.</li>
+<li>Restart or redeploy the app.</li>
+<li>Confirm your server can reach the internet (no firewall block).</li>
+</ul>
+<h2 id="feature-notes"><a class="header" href="#feature-notes">Feature Notes</a></h2>
+<p>Telebugs focuses on core error tracking. It works perfectly with:</p>
+<ul>
+<li>Error reports</li>
+<li>Breadcrumbs</li>
+<li>Contexts</li>
+<li>Tags</li>
+<li>User information</li>
+</ul>
+<p>Advanced Sentry features (Performance Tracing, Session Replay, Profiling) are
+not supported. Disable them in your SDK config if they are on by default (e.g.,
+set <code>traces_sample_rate = 0.0</code>).</p>
+<p>That is it! Your app is now reporting to Telebugs.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="team-management"><a class="header" href="#team-management">Team Management</a></h1>
+<p>Team management lets you invite collaborators, assign roles, control project
+access, and manage notifications.</p>
+<p>Start by clicking your profile icon in the top-right and selecting <strong>Team
+Management</strong>.</p>
+<h2 id="team-roles"><a class="header" href="#team-roles">Team Roles</a></h2>
+<p>Telebugs uses two roles:</p>
+<ul>
+<li><strong>Admin</strong>: Full access. Can manage settings, projects, users, and see all
+errors.</li>
+<li><strong>Member</strong>: Limited access. Can view and resolve errors in assigned projects
+only.</li>
+</ul>
+<p>Start new users as members. Promote later as needed.</p>
+<h2 id="inviting-team-members"><a class="header" href="#inviting-team-members">Inviting Team Members</a></h2>
+<p>Go to <strong>Team Management</strong> &gt; <strong>Members</strong>.</p>
+<p>Copy the invite link and share it with trusted people.</p>
+<p>The link works for anyone, so keep it private. Regenerate if needed.</p>
+<h2 id="joining-as-a-team-member"><a class="header" href="#joining-as-a-team-member">Joining as a Team Member</a></h2>
+<p>Click the invite link.</p>
+<p>Create an account or log in.</p>
+<p>You start with no project access. Ask an admin to assign projects.</p>
+<h2 id="promoting-or-demoting-members"><a class="header" href="#promoting-or-demoting-members">Promoting or Demoting Members</a></h2>
+<p>In <strong>Members</strong>, check the box next to a user to make them admin (or uncheck to
+demote).</p>
+<p>Changes save automatically.</p>
+<h2 id="removing-team-members"><a class="header" href="#removing-team-members">Removing Team Members</a></h2>
+<p>In <strong>Members</strong>, click the remove icon next to the user and confirm.</p>
+<p>You can re-invite later if needed.</p>
+<h2 id="recovering-access"><a class="header" href="#recovering-access">Recovering Access</a></h2>
+<p>In <strong>Members</strong>, click the user’s name.</p>
+<p>Copy the recovery link from <strong>Account recovery</strong> and send it to them.</p>
+<h2 id="project-access"><a class="header" href="#project-access">Project Access</a></h2>
+<p>Go to <strong>Team Management</strong> &gt; <strong>Project access</strong>.</p>
+<p>Check projects each user can access.</p>
+<p>Changes apply immediately.</p>
+<h2 id="team-notifications"><a class="header" href="#team-notifications">Team Notifications</a></h2>
+<p>Go to <strong>Team Management</strong> &gt; <strong>Notifications</strong>.</p>
+<p>Check projects where users get email alerts.</p>
+<p>This is for email only. Other integrations (like Slack) are separate.</p>
+<h2 id="next-steps"><a class="header" href="#next-steps">Next Steps</a></h2>
+<p>Customize <a href="/projects-04-project-settings.html">project settings</a> or <a href="/notifications-00.html">notifications</a> next.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="account-settings"><a class="header" href="#account-settings">Account Settings</a></h1>
+<p>Account settings let you update your profile, manage security, and control notifications.</p>
+<p>Click your profile icon in the top-right and select <strong>Account Settings</strong>.</p>
+<h2 id="profile-picture"><a class="header" href="#profile-picture">Profile Picture</a></h2>
+<p>Your profile picture shows next to your name in the dashboard and team views.</p>
+<p>To upload or change it:</p>
+<ol>
+<li>Click the current picture.</li>
+<li>Select a new image file.</li>
+<li>Click <strong>Update profile picture</strong>.</li>
+</ol>
+<p>To delete it and revert to default:</p>
+<ol>
+<li>Click the current picture.</li>
+<li>Choose the remove option.</li>
+<li>Click <strong>Update profile picture</strong>.</li>
+</ol>
+<h2 id="changing-your-name"><a class="header" href="#changing-your-name">Changing Your Name</a></h2>
+<p>Your name appears in team lists and notes.</p>
+<p>In <strong>Account Settings</strong>, enter a new full name and click <strong>Change name</strong>.</p>
+<p>No restrictions on length or characters.</p>
+<h2 id="security-settings"><a class="header" href="#security-settings">Security Settings</a></h2>
+<p>Go to the <strong>Security</strong> tab for API keys, email, and password.</p>
+<h3 id="regenerate-api-key"><a class="header" href="#regenerate-api-key">Regenerate API Key</a></h3>
+<p>Your API key lets you interact with Telebugs programmatically.</p>
+<p>In <strong>Security</strong>, click <strong>Regenerate</strong> to get a new one.</p>
+<p>Copy the new key and update your integrations immediately.</p>
+<h3 id="change-email-address"><a class="header" href="#change-email-address">Change Email Address</a></h3>
+<p>Enter your new email and current password, then click <strong>Change email</strong>.</p>
+<p>Verify the new email via the confirmation link sent to it.</p>
+<h3 id="change-password"><a class="header" href="#change-password">Change Password</a></h3>
+<p>Enter your current password, new password, and confirmation.</p>
+<p>Click <strong>Change password</strong>.</p>
+<h2 id="log-in-on-another-device"><a class="header" href="#log-in-on-another-device">Log In on Another Device</a></h2>
+<p>Generate a sign-in link for quick access on new devices.</p>
+<p>In the <strong>Sessions</strong> tab, copy the link from <strong>Log in on another device</strong>.</p>
+<p>The link expires after 4 hours. Do not share it.</p>
+<h2 id="notification-preferences"><a class="header" href="#notification-preferences">Notification Preferences</a></h2>
+<p>Control which projects send you email notifications.</p>
+<p>In the <strong>Notifications</strong> tab, toggle checkboxes for each project.</p>
+<p>Changes save automatically.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="appearance"><a class="header" href="#appearance">Appearance</a></h1>
+<p>The <strong>Appearance</strong> settings allow you to customize the look and feel of the
+Telebugs user interface to match your preferences. You can access these settings
+by clicking your avatar in the top-right corner and clicking the <strong>Appearance</strong>
+button.</p>
+<p><strong>Important:</strong> These settings are global and apply to <strong>all users</strong> on your
+Telebugs instance. Changes made here will affect the interface appearance for
+everyone.</p>
+<p>The dialog provides three independent customization options:</p>
+<h2 id="width"><a class="header" href="#width">Width</a></h2>
+<p>Controls the maximum width of the main dashboard and content areas.</p>
+<ul>
+<li>
+<p><strong>Standard</strong> (default)</p>
+<p>Limits the content width for better readability on larger screens. The
+interface uses comfortable margins on the sides.</p>
+</li>
+<li>
+<p><strong>Wide</strong></p>
+<p>Expands the dashboard to use the full available width of the browser window.
+Ideal if you prefer seeing more information at once (e.g., longer stack traces
+or wider tables).</p>
+</li>
+</ul>
+<h2 id="font"><a class="header" href="#font">Font</a></h2>
+<p>Changes the primary font used throughout the entire Telebugs interface. Telebugs
+uses modern system fonts by default for a clean, native look.</p>
+<ul>
+<li>
+<p><strong>Default</strong></p>
+<p>Uses the standard system sans-serif font stack (e.g., -apple-system,
+BlinkMacSystemFont, Segoe UI, Roboto, etc.) for all text in the interface.</p>
+</li>
+<li>
+<p><strong>Monospace</strong></p>
+<p>Switches the entire interface to use a monospace font globally (e.g., similar
+to Consolas, Menlo, or DejaVu Sans Mono). This applies to all UI text,
+including menus, tables, and dashboards—not just code areas.</p>
+</li>
+</ul>
+<h2 id="theme"><a class="header" href="#theme">Theme</a></h2>
+<p>Controls the color scheme of the entire application.</p>
+<ul>
+<li>
+<p><strong>Follow system</strong> (default)</p>
+<p>Automatically switches between light and dark mode based on your operating
+system’s appearance setting.</p>
+</li>
+<li>
+<p><strong>Light</strong>
+Forces the interface to use the light theme regardless of system preference.</p>
+</li>
+<li>
+<p><strong>Dark</strong>
+Forces the interface to use the dark theme regardless of system preference.</p>
+</li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="notifications"><a class="header" href="#notifications">Notifications</a></h1>
+<p>Telebugs supports email, push notifications, and webhooks for real-time alerts
+on errors.</p>
+<p>Configure global settings in your profile &gt; <strong>Notification Configuration</strong>.</p>
+<p>Conditions for alerts (apply to all channels):</p>
+<ul>
+<li>New error occurs.</li>
+<li>Error reoccurs after resolution.</li>
+<li>Frequency exceeds threshold (e.g., &gt;10 in 5 minutes).</li>
+</ul>
+<p>Projects can disable channels individually (see <a href="/projects-04-project-settings.html">Project Settings</a>). Users
+can opt out per project in their profile.</p>
+<p>See sub-sections for setup.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="email"><a class="header" href="#email">Email</a></h1>
+<p>Emails go to your account email.</p>
+<p>To configure:</p>
+<ol>
+<li>Go to <strong>Notification Configuration</strong> &gt; <strong>Email</strong>.</li>
+<li>Fill the form and save.</li>
+<li>Test with <strong>Send test email</strong>.</li>
+<li>Disable with the toggle.</li>
+</ol>
+<h2 id="configuration-form"><a class="header" href="#configuration-form">Configuration Form</a></h2>
+<p>The <strong>Email notifications configuration form</strong> defines global settings that all projects inherit. Complete the fields as follows:</p>
+<ul>
+<li><strong>Provider:</strong> Select your email provider from the dropdown. Telebugs supplies preset configurations for common providers (Gmail, Outlook, etc.). Choose <strong>Custom SMTP</strong> to enter your own server settings manually.</li>
+<li><strong>Outgoing (SMTP) server:</strong> Enter the SMTP server address used to send emails (for example, <code>smtp.gmail.com</code> for Gmail). This field is required.</li>
+<li><strong>Port:</strong> Specify the port number for the SMTP server. Typically <code>587</code> (TLS) or <code>465</code> (SSL). This field is required.</li>
+<li><strong>Username:</strong> Enter the username for your SMTP server—usually your email address or the username provided by your email service. Leave blank if authentication is not required. Required if your provider requires login.</li>
+<li><strong>Password:</strong> Enter the password for your SMTP account. Leave blank if authentication is not required. Required if your provider requires login.</li>
+<li><strong>Domain:</strong> The HELO domain used by the SMTP server (for example, <code>example.com</code>). This field is required.</li>
+<li><strong>From address:</strong> The email address that appears as the sender of notification emails. Commonly, a <code>no-reply</code> address. Optional.</li>
+<li><strong>Encryption:</strong> Select the encryption method for the SMTP connection: <strong>None</strong>, <strong>SSL</strong>, or <strong>TLS</strong>. This field is required.</li>
+<li><strong>Authentication:</strong> Specify if SMTP authentication is required: <strong>None</strong>, <strong>Login</strong>, or <strong>Plain</strong>. If you choose an option other than <strong>None</strong>, you must provide a username and password. This field is required.</li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="push-notifications"><a class="header" href="#push-notifications">Push Notifications</a></h1>
+<p>Push notifications deliver real-time alerts to your desktop browser or mobile device.</p>
+<p>Set up global push settings first. Projects can disable them individually, and
+users can opt out per project in their profile.</p>
+<p>Notifications go to devices where you have granted permission (browser prompt or
+device settings).</p>
+<p>You can receive alerts for:</p>
+<ul>
+<li>A new error occurring for the first time.</li>
+<li>An error reoccurring after being resolved.</li>
+<li>Error frequency exceeding a threshold (e.g., more than 10 reports in 5 minutes).</li>
+</ul>
+<p>For the best mobile experience, install Telebugs as a Progressive Web App (PWA). See the PWA installation section below.</p>
+<h2 id="configuring-push-notifications"><a class="header" href="#configuring-push-notifications">Configuring Push Notifications</a></h2>
+<ol>
+<li>Click your profile in the top-right and select <strong>Notification Configuration</strong>.</li>
+<li>Choose <strong>Push</strong> in the sidebar.</li>
+<li>Fill the form and click <strong>Save Configuration</strong>.
+A green checkmark appears next to Push when configured.</li>
+<li>Click <strong>Send test push notification</strong> to verify.</li>
+<li>If prompted, allow notifications in your browser or device.
+A confirmation shows the test was sent – check your device.</li>
+<li>To disable globally, toggle off <strong>Enable push notifications</strong>.
+The icon changes to a crossed-out bell.</li>
+</ol>
+<p>Real errors will trigger push notifications based on project rules, including the error message, project name, and a direct link.</p>
+<h2 id="push-configuration-form"><a class="header" href="#push-configuration-form">Push Configuration Form</a></h2>
+<ul>
+<li><strong>VAPID subject</strong> (required): A contact URL or email for your instance, e.g., <code>https://telebugs.example.com</code> or <code>mailto:admin@example.com</code>.</li>
+</ul>
+<h2 id="installing-telebugs-as-a-progressive-web-app-pwa"><a class="header" href="#installing-telebugs-as-a-progressive-web-app-pwa">Installing Telebugs as a Progressive Web App (PWA)</a></h2>
+<p>Installing as a PWA gives a native-app feel and more reliable push notifications on mobile. It is optional but recommended.</p>
+<h3 id="benefits"><a class="header" href="#benefits">Benefits</a></h3>
+<ul>
+<li>Faster loading.</li>
+<li>Push notifications even when the browser is closed.</li>
+<li>Full-screen, app-like experience.</li>
+</ul>
+<h3 id="android-chrome"><a class="header" href="#android-chrome">Android (Chrome)</a></h3>
+<ul>
+<li>Open Telebugs in Chrome.</li>
+<li>Tap the three-dot menu &gt; <strong>Add to Home screen</strong>.
+Or tap the automatic <strong>Install</strong> prompt at the bottom if it appears.</li>
+<li>Confirm <strong>Add</strong> or <strong>Install</strong>.</li>
+</ul>
+<h3 id="ios-safari"><a class="header" href="#ios-safari">iOS (Safari)</a></h3>
+<ul>
+<li>Open Telebugs in Safari.</li>
+<li>Tap the Share icon (square with upward arrow).</li>
+<li>Scroll and select <strong>Add to Home Screen</strong>.</li>
+<li>Tap <strong>Add</strong>.</li>
+</ul>
+<h3 id="desktop-chrome--optional"><a class="header" href="#desktop-chrome--optional">Desktop (Chrome) – Optional</a></h3>
+<ul>
+<li>Open Telebugs in Chrome.</li>
+<li>Click the + icon in the address bar or menu &gt; <strong>Install Telebugs</strong>.</li>
+<li>Confirm <strong>Install</strong>.</li>
+</ul>
+<p><strong>Note:</strong> Steps may vary slightly by browser version. Keep your browser updated
+and allow notifications when prompted.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="webhooks"><a class="header" href="#webhooks">Webhooks</a></h1>
+<p>Send POST to services like Slack or Discord.</p>
+<p>To configure:</p>
+<ol>
+<li>Go to <strong>Notification Configuration</strong> &gt; <strong>Webhooks</strong>.</li>
+<li>Click <strong>Create Configuration</strong>.</li>
+<li>Fill form and save.</li>
+<li>Test with <strong>Test</strong>.</li>
+<li>Edit by clicking the name.</li>
+</ol>
+<h2 id="add-webhook-form"><a class="header" href="#add-webhook-form">Add Webhook Form</a></h2>
+<ul>
+<li><strong>URL</strong>: Public endpoint.</li>
+<li><strong>Name</strong>: Optional.</li>
+<li><strong>Template</strong>: Slack, Discord, Custom.</li>
+<li><strong>Body</strong>: JSON with placeholders.</li>
+</ul>
+<h2 id="placeholders"><a class="header" href="#placeholders">Placeholders</a></h2>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Placeholder</th><th>Description</th><th>Example</th></tr>
+</thead>
+<tbody>
+<tr><td><code>{{project_name}}</code></td><td>The name of the project where the error occurred.</td><td><code>Backend</code>, <code>example.com</code></td></tr>
+<tr><td><code>{{trigger}}</code></td><td>The event that caused the notification or error alert.</td><td><code>"error"</code>, <code>"reoccurrence"</code>, <code>"error frequency exceeded"</code></td></tr>
+<tr><td><code>{{subject}}</code></td><td>A short description of the error or affected part of the code.</td><td><code>NoMethodError in ScoresController#create</code>, <code>Error in Thread.java</code></td></tr>
+<tr><td><code>{{culprit}}</code></td><td>The specific method, function, or code location responsible for the error.</td><td><code>ScoresController#create</code></td></tr>
+<tr><td><code>{{location}}</code></td><td>The file or line number where the error originated.</td><td><code>app/controllers/scores_controller.rb:42</code></td></tr>
+<tr><td><code>{{error_type}}</code></td><td>The class or type of the error.</td><td><code>NoMethodError</code>, <code>Error</code>, <code>Exception</code></td></tr>
+<tr><td><code>{{error_message}}</code></td><td>The detailed message associated with the error.</td><td><code>undefined method '+' for nil</code>, <code>division by zero</code></td></tr>
+<tr><td><code>{{project_url}}</code></td><td>A link to the project’s dashboard in Telebugs.</td><td><code>https://telebugs.example.com/projects/7</code></td></tr>
+<tr><td><code>{{view_url}}</code></td><td>A link to view the specific error instance in Telebugs.</td><td><code>https://telebugs.example.com/errors/107</code></td></tr>
+</tbody>
+</table>
+</div>
+<h2 id="slack-setup"><a class="header" href="#slack-setup">Slack Setup</a></h2>
+<p>In Slack: <strong>Channel</strong> &gt; <strong>Integrations</strong> &gt; <strong>Incoming Webhooks</strong> &gt; <strong>Add to Slack</strong> &gt; <strong>Copy URL</strong>.</p>
+<p>In Telebugs: Use <strong>Slack</strong> template, paste URL.</p>
+<p>Example payload:</p>
+<pre><code class="language-json">{
+  "username": "Telebugs",
+  "attachments": [
+    {
+      "fallback": "{{project_name}}: {{trigger}} - {{error_type}}: {{error_message}}",
+      "pretext": "*{{trigger}}* from &lt;{{project_url}}|{{project_name}}&gt;",
+      "color": "#D00000",
+      "fields": [
+        {
+          "title": "{{error_type}}{{culprit}}",
+          "value": "{{error_message}}",
+          "short": false
+        },
+        {
+          "title": "Location",
+          "value": "{{location}}",
+          "short": false
+        }
+      ],
+      "actions": [
+        {
+          "type": "button",
+          "text": "View",
+          "url": "{{view_url}}"
+        }
+      ]
+    }
+  ]
+}
+</code></pre>
+<h2 id="discord-setup"><a class="header" href="#discord-setup">Discord Setup</a></h2>
+<p>In Discord: <strong>Server Settings</strong> &gt; <strong>Integrations</strong> &gt; <strong>Create Webhook</strong> &gt; <strong>Copy UR</strong>L.</p>
+<p>In Telebugs: Use <strong>Discord</strong> template, paste URL.</p>
+<p>Example payload:</p>
+<pre><code class="language-json">{
+  "content": "**{{trigger}}** from [{{project_name}}]({{project_url}})\n[View error]({{view_url}})",
+  "embeds": [
+    {
+      "color": 16711680,
+      "fields": [
+        {
+          "name": "{{error_type}}{{culprit}}",
+          "value": "{{error_message}}"
+        },
+        {
+          "name": "Location",
+          "value": "{{location}}"
+        }
+      ]
+    }
+  ]
+}
+</code></pre>
+<h2 id="custom-webhooks"><a class="header" href="#custom-webhooks">Custom Webhooks</a></h2>
+<p>Use Custom template. Build your JSON with placeholders.</p>
+<p>Example:</p>
+<pre><code class="language-json">{
+  "project_name": "{{project_name}}",
+  "trigger": "{{trigger}}",
+  "subject": "{{subject}}",
+  "culprit": "{{culprit}}",
+  "location": "{{location}}",
+  "error_type": "{{error_type}}",
+  "error_message": "{{error_message}}",
+  "view_url": "{{view_url}}"
+}
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="projects"><a class="header" href="#projects">Projects</a></h1>
+<p>Projects organize error tracking for specific apps or services. Each has its own
+reports, settings, and access controls.</p>
+<p>This section covers viewing projects, dashboards, pinning, and settings.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="project-overview"><a class="header" href="#project-overview">Project Overview</a></h1>
+<p>View all projects in the main dashboard or by clicking “Projects” in navigation.</p>
+<p>Each project card shows:</p>
+<ul>
+<li>Platform icon (e.g., Ruby, JavaScript).</li>
+<li>Name (click to open).</li>
+<li>Sparkline of recent errors (24 hours).</li>
+<li>Dropdown for actions like settings.</li>
+</ul>
+<p>Use <strong>New Project</strong> in top-right to add more.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="individual-project-view"><a class="header" href="#individual-project-view">Individual Project View</a></h1>
+<p>Click a project to open its dashboard for analyzing errors.</p>
+<p>Key elements:</p>
+<ul>
+<li>Project picker dropdown: Switch projects or access settings.</li>
+<li>Releases link: View release history.</li>
+<li>Search bar: Find errors by message, type, or details (live updates).</li>
+<li>Date range selector: Filter by time (e.g., today, last week) with pager.</li>
+<li>Stats overview: Total reports, new vs. reoccurred.</li>
+<li>Interactive chart: Error volume over time; zoom on spikes.</li>
+<li>Error list: Grouped unique errors with type, message, timestamp, and count. Click for details.</li>
+<li>Filters: All, resolved, unresolved; sort by last seen or count.</li>
+</ul>
+<p>If no errors, dashboard shows SDK setup instructions. Refreshes automatically as reports arrive.</p>
+<p>Use search and filters to triage high-volume unresolved errors. Chart helps spot deploy or traffic patterns.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="pinning-projects"><a class="header" href="#pinning-projects">Pinning Projects</a></h1>
+<p>Pin projects to keep them at the top of the dashboard for quick access.</p>
+<p>To pin/unpin:</p>
+<ol>
+<li>Click three dots on the card.</li>
+<li>Select <strong>Pin project</strong> or <strong>Unpin project</strong>.</li>
+</ol>
+<p>Pinned projects show a pin icon and stay at the top, even in apps.</p>
+<p>Notes:</p>
+<ul>
+<li>Independent of app pinning.</li>
+<li>Multiple pins allowed; ordered by pin time.</li>
+</ul>
+<p>Pin critical or active projects to streamline workflow.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="project-settings"><a class="header" href="#project-settings">Project Settings</a></h1>
+<p>Access via three dots on card &gt; <strong>Settings</strong>, or inside project &gt; project name
+dropdown &gt; <strong>Project Settings</strong>.</p>
+<h2 id="general-settings"><a class="header" href="#general-settings">General Settings</a></h2>
+<ul>
+<li><strong>Name</strong>: Update for clarity, e.g., “AwesomeApp Backend”. Click <strong>Rename</strong>.</li>
+<li><strong>Timezone</strong>: Set to match team or servers (affects dates in reports).
+Search/select, <strong>Change timezone</strong>. Use UTC for global teams.</li>
+<li><strong>Platform</strong>: Choose for icon and tailored SDK guides. Save changes.</li>
+</ul>
+<p>These make the dashboard more intuitive without affecting data.</p>
+<h2 id="token-settings"><a class="header" href="#token-settings">Token Settings</a></h2>
+<p>Tokens allow your app to send reports securely.</p>
+<ul>
+<li><strong>Project token</strong>: View/copy/regenerate if compromised (invalidates old one).</li>
+<li><strong>DSN</strong>: Full URL with token. Copy for SDK config.</li>
+</ul>
+<p>Store in env vars, not code. Test after regenerate with a sample error.</p>
+<h2 id="access-control"><a class="header" href="#access-control">Access Control</a></h2>
+<p>Control who sees the project.</p>
+<p>View team list and toggle checkboxes for access.</p>
+<p>Admins: full control; members: view/resolve only.</p>
+<p>Changes save automatically. See <a href="/team-management-00.html">Team Management</a> for roles/invites.</p>
+<p>Use for segmented teams, e.g., backend devs on backend projects.</p>
+<h2 id="notifications-settings"><a class="header" href="#notifications-settings">Notifications Settings</a></h2>
+<p>Enable alerts via preferred channels without overload.</p>
+<ul>
+<li><strong>Channels</strong>: Toggle Email, Push, Webhooks. Configure/test each.</li>
+<li><strong>Rules</strong>: Set for new errors, reoccurrences, frequency thresholds.</li>
+<li><strong>Recipients</strong>: Toggle per user for targeted alerts, e.g., on-call.</li>
+</ul>
+<p>Combine channels for redundancy. Test with simulated errors to avoid fatigue.</p>
+<h2 id="danger-zone"><a class="header" href="#danger-zone">Danger Zone</a></h2>
+<p>Irreversible actions; back up first.</p>
+<ul>
+<li><strong>Stats</strong>: Disk space, report count.</li>
+<li><strong>Partial purge</strong>: Remove details from old reports, keep stats.</li>
+<li><strong>Purge attachments</strong>: Clear files from notes (text remains).</li>
+<li><strong>Full purge</strong>: Wipe all error data (project structure stays).</li>
+<li><strong>Delete project</strong>: Remove entirely; double-confirm.</li>
+</ul>
+<p>Use for cleanup, but export data if needed for audits (see <a href="/data-retention-00.html">Data Retention</a>).</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="apps"><a class="header" href="#apps">Apps</a></h1>
+<p>Apps group related projects together in the dashboard. This keeps things
+organized and makes navigation faster.</p>
+<p>The typical setup is one app for your product that contains both backend and
+frontend projects. For example, group your Rails project and JavaScript project
+under a single “My Blog” app.</p>
+<p>App cards appear at the top of the projects dashboard. Each card shows the app
+name, project count, and combined recent error activity.</p>
+<h2 id="managing-apps"><a class="header" href="#managing-apps">Managing Apps</a></h2>
+<ul>
+<li><strong>Create</strong>: Click <strong>New App</strong> on the projects dashboard. Give it a name and
+select the projects to include.</li>
+<li><strong>Edit</strong>: Open the app or use the three-dot menu on the card. Change the name
+or projects.</li>
+<li><strong>Pin</strong>: Use the three-dot menu to pin important apps to the top.</li>
+<li><strong>Delete</strong>: Open the app and click <strong>Delete app</strong>. Confirm the action.</li>
+</ul>
+<h3 id="key-points"><a class="header" href="#key-points">Key Points</a></h3>
+<ul>
+<li>A project can belong to only one app.</li>
+<li>App names must be unique.</li>
+<li>Deleting an app does not delete projects or errors. Projects simply become
+standalone again.</li>
+<li>Organize however you want. No strict rules.</li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="all-errors"><a class="header" href="#all-errors">All Errors</a></h1>
+<p>The <strong>All Errors</strong> view provides a global, cross-project overview of all error
+groups in your Telebugs instance. It lists every grouped error (issue) that you
+have access to, sorted by the most recently seen.</p>
+<p>This is one of the main entry points to Telebugs and is especially useful when
+managing multiple projects or when you want to see the overall health of your
+entire system at a glance.</p>
+<blockquote>
+<p><strong>Note:</strong> Only errors from projects you are a member of are shown.</p>
+</blockquote>
+<h2 id="key-features"><a class="header" href="#key-features">Key Features</a></h2>
+<h3 id="filtering"><a class="header" href="#filtering">Filtering</a></h3>
+<p>You can narrow down the list using the filter controls at the top of the page
+(all times are in UTC):</p>
+<ul>
+<li><strong>Project</strong>: Select a specific project or leave as “All” to see errors across
+all your projects.</li>
+<li><strong>From / To</strong>: Date-time range picker to show only errors whose first or last
+occurrence falls within the specified window. Defaults to the full range of
+available data.</li>
+<li><strong>Reset link</strong>: Quickly clear all filters.</li>
+</ul>
+<h3 id="status-tabs"><a class="header" href="#status-tabs">Status Tabs</a></h3>
+<p>Segmented control to switch between:</p>
+<ul>
+<li><strong>unresolved</strong> – Active errors that have not been resolved (default view).</li>
+<li><strong>resolved</strong> – Errors that have been marked as resolved.</li>
+<li><strong>all</strong> – Both unresolved and resolved errors.</li>
+</ul>
+<h3 id="sorting-and-pagination"><a class="header" href="#sorting-and-pagination">Sorting and Pagination</a></h3>
+<ul>
+<li>Errors are sorted by <strong>last seen</strong> time (most recent first).</li>
+<li>Infinite-style cursor-based pagination with <strong>Previous</strong> / <strong>Next</strong> arrows.</li>
+<li>Loads 50 errors per page.</li>
+</ul>
+<h3 id="error-list"><a class="header" href="#error-list">Error List</a></h3>
+<p>The list displays error groups in either a responsive table (desktop) or compact
+cards (mobile).</p>
+<p>Each row/card shows:</p>
+<ul>
+<li><strong>Project name</strong> – Link to the project’s overview.</li>
+<li><strong>Error icon</strong> – A generated bug illustration or the first screenshot/image
+from the error reports.
+<ul>
+<li>Badges overlay the icon if the error has an <strong>owner</strong>, is <strong>muted/snoozed</strong>,
+or is <strong>resolved</strong>.</li>
+<li>Hovering the icon reveals a popover with details about ownership, mute
+status, and resolution.</li>
+</ul>
+</li>
+<li><strong>Error type and culprit</strong> – e.g., <code>TypeError</code> in <code>app/controllers/users_controller.rb</code>.</li>
+<li><strong>Error message</strong> – Truncated preview, clickable to open the full error group
+detail.</li>
+<li><strong>Reports count</strong> – Number of individual error reports in the group, with a
+link to view all reports.</li>
+<li><strong>Seen times</strong> –
+<ul>
+<li>“Last seen” (e.g., “5 minutes ago”) – primary sort key.</li>
+<li>“First seen” (e.g., “3 days old”).</li>
+<li>Hovering reveals exact UTC timestamps in a popover.</li>
+</ul>
+</li>
+</ul>
+<p>This dashboard is ideal for triaging new or recurring issues across your entire
+deployment, spotting widespread problems, or monitoring overall error volume.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="all-reports"><a class="header" href="#all-reports">All Reports</a></h1>
+<p>The <strong>All Reports</strong> view provides a global, cross-project list of every
+individual error report received by your Telebugs instance. Unlike the <strong>All
+Errors</strong> view (which shows grouped issues), this page displays raw, ungrouped
+reports in chronological order.</p>
+<p>This view is particularly useful for:</p>
+<ul>
+<li>Investigating very recent errors in real time.</li>
+<li>Auditing exact occurrences without grouping logic interference.</li>
+<li>Debugging timing-specific issues or spotting patterns in rapid bursts of
+reports.</li>
+</ul>
+<blockquote>
+<p><strong>Note:</strong> Only reports from projects you are a member of are shown.</p>
+</blockquote>
+<h2 id="key-features-1"><a class="header" href="#key-features-1">Key Features</a></h2>
+<h3 id="filtering-1"><a class="header" href="#filtering-1">Filtering</a></h3>
+<p>Filter controls at the top of the page (all times are in UTC):</p>
+<ul>
+<li><strong>Project</strong>: Select a specific project or leave as “All” to see reports across
+all your projects.</li>
+<li><strong>From / To</strong>: Date-time range picker to restrict reports to those that
+occurred within the specified window. Defaults to the full range of available
+data.</li>
+<li><strong>Reset link</strong>: Quickly clear all filters.</li>
+</ul>
+<h3 id="sorting-and-pagination-1"><a class="header" href="#sorting-and-pagination-1">Sorting and Pagination</a></h3>
+<ul>
+<li>Reports are sorted by <strong>occurred at</strong> time (most recent first).</li>
+<li>Cursor-based pagination with <strong>Previous</strong> / <strong>Next</strong> arrows.</li>
+<li>Loads 50 reports per page.</li>
+</ul>
+<h3 id="report-list"><a class="header" href="#report-list">Report List</a></h3>
+<p>The list displays individual reports in either a responsive table (desktop) or
+compact cards (mobile).</p>
+<p>Each row/card shows:</p>
+<ul>
+<li><strong>Project name</strong> – Link to the project’s overview.</li>
+<li><strong>Report summary</strong> – Clickable link showing the report <strong>subject</strong> (bold)
+followed by a truncated <strong>error message</strong>. Clicking opens the full individual
+report detail.</li>
+<li><strong>Status</strong> – Icons indicating the current state of the associated error group:
+<ul>
+<li>Owner (user icon or profile picture)</li>
+<li>Muted or snoozed (bell icons)</li>
+<li>Resolved (check icon)</li>
+<li>Hovering the icons reveals a popover with detailed ownership, mute/snooze, and resolution information.</li>
+</ul>
+</li>
+<li><strong>Occurred at</strong> – Relative time (e.g., “5 minutes ago”).
+<ul>
+<li>Hovering reveals the exact UTC timestamp in a popover.</li>
+</ul>
+</li>
+</ul>
+<p>This dashboard complements the <strong>All Errors</strong> view by letting you drill into the
+raw stream of incoming reports, making it ideal for monitoring live traffic or
+troubleshooting issues that may not yet be grouped effectively.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="releases"><a class="header" href="#releases">Releases</a></h1>
+<p>Releases in Telebugs let you tag versions of your app, primarily to attach
+source maps. This enables unminifying stack traces in error reports and makes
+debugging easier by mapping minified code back to original sources.</p>
+<p>Currently, releases focus solely on source map support. There are no additional
+features yet.</p>
+<p>This chapter covers the essentials. You will learn how to view releases, create
+them, and manage details such as artifacts and deletion.</p>
+<h2 id="releases-overview"><a class="header" href="#releases-overview">Releases Overview</a></h2>
+<p>In the project dashboard (see <a href="/projects-02-individual-project-view.html">Individual Project View</a>), look for the
+<strong>Releases (N)</strong> link in the top-right corner. The number shows how many
+releases exist. Clicking it takes you to the full list.</p>
+<p>Releases are directly tied to source maps. If you minify your code, accurate
+releases are essential for readable stack traces in errors.</p>
+<p><strong>Pro tip:</strong> Create releases as part of your deploy pipeline to ensure source
+maps align perfectly with each version.</p>
+<h2 id="viewing-releases"><a class="header" href="#viewing-releases">Viewing Releases</a></h2>
+<p>The releases page shows a chronological list of all releases. Each entry
+includes:</p>
+<ul>
+<li><strong>Version</strong>: Your custom tag (for example, <code>v1.2.3</code>).</li>
+<li><strong>Timestamp</strong>: When the release was created.</li>
+<li><strong>ID</strong>: A unique internal identifier.</li>
+<li><strong>Artifacts</strong>: The count or list of attached files, typically source maps.</li>
+</ul>
+<p><strong>Quick tip:</strong> Verify this page after a deploy to confirm that your source maps
+uploaded successfully.</p>
+<h2 id="creating-releases"><a class="header" href="#creating-releases">Creating Releases</a></h2>
+<p>You can create releases manually in the UI, via the SDK or API for automation,
+or by using the Sentry CLI. Compatible commands work in a similar way.</p>
+<h3 id="in-the-ui"><a class="header" href="#in-the-ui">In the UI</a></h3>
+<ol>
+<li>On the releases list page, click <strong>New Release</strong>.</li>
+<li>Enter the version tag.</li>
+<li>Upload source maps or other artifacts if needed.</li>
+<li>Save. The release is now active for error mapping.</li>
+</ol>
+<h3 id="via-sdk-javascript-example"><a class="header" href="#via-sdk-javascript-example">Via SDK (JavaScript example)</a></h3>
+<pre><code class="language-js">Telebugs.setRelease("v1.2.3");
+// Upload source maps separately if required
+</code></pre>
+<h3 id="via-cli"><a class="header" href="#via-cli">Via CLI</a></h3>
+<p>Set up environment variables as described in the source map upload section, then
+run:</p>
+<pre><code class="language-sh">sentry-cli releases new &lt;version&gt;
+</code></pre>
+<p>The main value comes from attaching source maps.</p>
+<p><strong>Quick tip:</strong> Automate release creation and source map uploads in your CI/CD
+pipeline.</p>
+<h2 id="release-details"><a class="header" href="#release-details">Release Details</a></h2>
+<p>Click any release in the list to open its detail page. Here you will see
+version-specific information and attached artifacts, such as source maps.</p>
+<p>Available actions include:</p>
+<ul>
+<li><strong>View artifact:</strong> Open and inspect an attached file. This is useful for
+verification.</li>
+<li><strong>Delete artifact:</strong> Remove a specific file, for example one uploaded
+incorrectly. This does not delete the release itself. It only removes the
+mapping.</li>
+<li><strong>Delete release:</strong> Permanently remove the entire release. Use this with
+caution. It unlinks all artifacts and can break unminification for errors from
+that version.</li>
+</ul>
+<p><strong>Pro tip:</strong> Create releases as part of your deploy pipeline to ensure source
+maps align perfectly with each version (see <a href="/release-01-source-maps.html">Source Maps</a>).</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="source-maps"><a class="header" href="#source-maps">Source Maps</a></h1>
+<p>Source maps allow Telebugs to resolve minified JavaScript and TypeScript stack
+traces back to the original source code. This makes errors from production
+builds readable, showing the real files, line numbers, and context instead of
+the bundled/minified versions.</p>
+<p>This chapter covers generating source maps, uploading them to Telebugs, and
+associating them with releases.</p>
+<h2 id="understanding-source-maps"><a class="header" href="#understanding-source-maps">Understanding Source Maps</a></h2>
+<p>Source maps are files created by bundlers (Webpack, Vite, Rollup, etc.) that map
+minified or transpiled code back to the original source files.</p>
+<p>Without source maps, stack traces point to the minified bundle, making debugging
+difficult. When properly uploaded and linked to a release in Telebugs, errors
+automatically show the original code.</p>
+<p>To generate them, enable source map output in your bundler configuration (e.g.,
+<code>devtool: 'source-map'</code> in Webpack or <code>sourcemap: true</code> in Vite).</p>
+<h2 id="integrating-source-maps-with-releases"><a class="header" href="#integrating-source-maps-with-releases">Integrating Source Maps with Releases</a></h2>
+<p>Source maps in Telebugs must be attached to a specific release so they apply
+only to errors from that version.</p>
+<p>Access releases from the project dashboard via the <strong>Releases (N)</strong> link in the top-right (see <a href="/projects-02-individual-project-view.html">Individual Project View</a>).</p>
+<p>Always create the release first (see <a href="/releases-00.html">Releases</a>), then upload source maps to it.</p>
+<h2 id="uploading-source-maps"><a class="header" href="#uploading-source-maps">Uploading Source Maps</a></h2>
+<p>You can upload source maps manually in the UI or automatically with the Sentry CLI (fully compatible with Telebugs).</p>
+<h3 id="manual-upload"><a class="header" href="#manual-upload">Manual Upload</a></h3>
+<ol>
+<li>Open the desired release in the releases list.</li>
+<li>Click <strong>Attach artifacts</strong> (or drag and drop files).</li>
+<li>Select your <code>.map</code> files and upload. Multiple files are supported.</li>
+</ol>
+<h3 id="automated-upload-recommended"><a class="header" href="#automated-upload-recommended">Automated Upload (Recommended)</a></h3>
+<ol>
+<li>
+<p>Get your personal API key from <strong>Account Settings</strong>. It starts with <code>tlbgs_</code>.</p>
+</li>
+<li>
+<p>Set these environment variables:</p>
+<pre><code class="language-bash">export SENTRY_URL=https://your-telebugs-instance.com
+export SENTRY_AUTH_TOKEN=tlbgs_your-api-key-here
+export SENTRY_PROJECT=your-project-id
+export SENTRY_ORG=unused # Required for compatibility, value doesn't matter
+</code></pre>
+</li>
+<li>
+<p>Upload source maps:</p>
+<pre><code class="language-sh">sentry-cli sourcemaps upload --release=v1.2.3 ./path/to/maps
+</code></pre>
+</li>
+<li>
+<p>If your build doesn’t already reference the source maps, inject the
+references first:</p>
+<pre><code class="language-sh">sentry-cli sourcemaps inject ./dist
+sentry-cli sourcemaps upload --release=v1.2.3 ./dist
+</code></pre>
+</li>
+</ol>
+<p>After upload, new error reports from that version will automatically use the
+maps for unminification.</p>
+<p><strong>Quick tip:</strong> Test by triggering an error in production and checking if the
+stack trace shows original source files.</p>
+<h2 id="managing-source-maps"><a class="header" href="#managing-source-maps">Managing Source Maps</a></h2>
+<p>Uploaded source maps appear as artifacts on the release details page (see
+Release Details).</p>
+<p>From there you can:</p>
+<ul>
+<li>View or download individual artifacts for verification.</li>
+<li>Delete specific artifacts if uploaded incorrectly.</li>
+<li>Delete the entire release to remove all associated maps (caution: this breaks
+unminification for past errors from that version).</li>
+</ul>
+<p><strong>Pro tip:</strong> Use meaningful version tags and clean up old releases when they are
+no longer needed for active debugging.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="error-reports"><a class="header" href="#error-reports">Error Reports</a></h1>
+<p>Telebugs collects rich error reports using compatible Sentry SDKs. Each report
+contains stack traces, request data, breadcrumbs, tags, and more to help you
+diagnose problems quickly.</p>
+<p>Similar errors are automatically grouped into issues to reduce noise.</p>
+<p>Teams can add notes (with attachments) to discuss and track resolution (see
+<a href="/error-reports-03-notes-and-collaboration.html">Notes and Collaboration</a>).</p>
+<p>See the following sections for details.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="error-report-structure"><a class="header" href="#error-report-structure">Error Report Structure</a></h1>
+<p>An individual error report page in Telebugs is divided into sections that
+provide layered context about the error.</p>
+<h2 id="report-details"><a class="header" href="#report-details">Report Details</a></h2>
+<p>High-level overview:</p>
+<ul>
+<li><strong>Error message</strong>: The main description of what went wrong.</li>
+<li><strong>When</strong>: Relative time (e.g., “5 minutes ago”).</li>
+<li><strong>Occurred at</strong>: Exact timestamp in the project’s timezone.</li>
+<li><strong>Handled</strong>: Whether the error was caught and reported manually or unhandled.</li>
+<li><strong>Severity</strong>: Level such as error, warning, or info.</li>
+<li><strong>Server name</strong>: Host where the error occurred.</li>
+<li><strong>Environment</strong>: Production, staging, etc.</li>
+</ul>
+<h2 id="backtrace"><a class="header" href="#backtrace">Backtrace</a></h2>
+<p>The stack trace showing where the error originated.</p>
+<p>Each frame lists:</p>
+<ul>
+<li>Filename</li>
+<li>Function/method name</li>
+<li>Line (and column) number</li>
+</ul>
+<p>Code context is shown around the error line (highlighted). Frames can be
+expanded for more lines.</p>
+<p>If source maps are attached to the release, minified traces resolve to original
+source files.</p>
+<p><strong>Quick tip:</strong> Focus on “in-app” frames (your code) and ignore library frames
+when investigating.</p>
+<h2 id="http-request"><a class="header" href="#http-request">HTTP Request</a></h2>
+<p>For web-related errors, details of the triggering request:</p>
+<ul>
+<li>Method and full URL</li>
+<li>Headers</li>
+<li>Environment variables (e.g., remote IP)</li>
+<li>Body data (form fields, JSON, etc.)</li>
+</ul>
+<p>Useful for reproducing API or page errors.</p>
+<h2 id="tags"><a class="header" href="#tags">Tags</a></h2>
+<p>Key-value pairs for extra context (e.g., <code>browser: Chrome 128</code>, <code>feature: checkout</code>).</p>
+<p>Tags are searchable and great for filtering in the dashboard.</p>
+<p>Add them via the SDK: <code>Telebugs.setTag('key', 'value')</code>.</p>
+<h2 id="breadcrumbs"><a class="header" href="#breadcrumbs">Breadcrumbs</a></h2>
+<p>A timeline of events leading up to the error (console logs, navigation, HTTP
+calls, etc.).</p>
+<p>Each breadcrumb shows timestamp, category, message, and data. Expand for full
+details.</p>
+<p>Enable automatic breadcrumbs in your SDK for richer trails.</p>
+<h2 id="contexts"><a class="header" href="#contexts">Contexts</a></h2>
+<p>Environmental details:</p>
+<ul>
+<li>OS name and version</li>
+<li>Runtime (e.g., Node.js, Python)</li>
+<li>Device or browser info</li>
+</ul>
+<p>Helps identify platform-specific issues.</p>
+<h2 id="dependencies"><a class="header" href="#dependencies">Dependencies</a></h2>
+<p>List of loaded packages/modules with versions (e.g., <code>express: 4.18.2</code>).</p>
+<p>Check here for known vulnerable or incompatible versions.</p>
+<h2 id="sdk"><a class="header" href="#sdk">SDK</a></h2>
+<p>Shows which Sentry SDK sent the report and its version.</p>
+<h2 id="affected-user"><a class="header" href="#affected-user">Affected User</a></h2>
+<p>User information (if set via SDK):</p>
+<ul>
+<li>ID, username, email</li>
+<li>IP address and approximate geo location</li>
+</ul>
+<p>Set with <code>Telebugs.setUser({ id: '123', email: 'user@example.com' })</code>.</p>
+<h2 id="additional-data"><a class="header" href="#additional-data">Additional Data</a></h2>
+<p>Custom key-value data sent with the report.</p>
+<p>Use for anything not covered elsewhere.</p>
+<h2 id="viewing-raw-data-view-as"><a class="header" href="#viewing-raw-data-view-as">Viewing Raw Data (View as)</a></h2>
+<p>On any individual error report page, you can access alternative representations
+of the report data using the <strong>View as</strong> dropdown.</p>
+<p>Available formats:</p>
+<ul>
+<li>
+<p><strong>Structured</strong> (default)</p>
+<p>The standard Telebugs interface with organized sections (Backtrace, Request,
+Tags, etc.).</p>
+</li>
+<li>
+<p><strong>JSON</strong></p>
+<p>The complete raw event payload as pretty-printed JSON. Useful for copying
+data, debugging SDK integration, or programmatic processing.</p>
+</li>
+<li>
+<p><strong>XML</strong></p>
+<p>The event payload rendered in XML format (for compatibility with certain tools
+or legacy systems).</p>
+</li>
+<li>
+<p><strong>Markdown</strong></p>
+<p>A clean, human-readable Markdown summary of the report, including the error
+message, formatted stack trace (in code blocks), key contexts, tags, and other
+details. Ideal for pasting into tickets, pull requests, or chat.</p>
+</li>
+</ul>
+<p>Selecting a format instantly opens it <strong>in the same tab</strong> at a new URL, for example:</p>
+<ul>
+<li><code>https://your-instance.example.com/errors/2003/reports/982768.json</code></li>
+<li><code>https://your-instance.example.com/errors/2003/reports/982768.xml</code></li>
+<li><code>https://your-instance.example.com/errors/2003/reports/982768.markdown</code></li>
+</ul>
+<p>These URLs can be shared directly — anyone with access to the project will see
+the report in the chosen format.</p>
+<p><strong>Tip:</strong> Bookmark or share the direct <code>.json</code>, <code>.xml</code>, or <code>.markdown</code> URL when
+you need to reference the raw or formatted version outside of Telebugs.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="grouping-and-fingerprinting"><a class="header" href="#grouping-and-fingerprinting">Grouping and Fingerprinting</a></h1>
+<p>Telebugs automatically groups similar error reports into a single issue to
+reduce noise and help you focus on unique problems.</p>
+<p>Grouping uses a fingerprint hash derived from the error data.</p>
+<h2 id="default-grouping-rules"><a class="header" href="#default-grouping-rules">Default Grouping Rules</a></h2>
+<p>By default, Telebugs prioritizes:</p>
+<ol>
+<li>Stack trace (in-app frames: filename + function + line)</li>
+<li>Exception type and message</li>
+<li>Fallback to error message</li>
+</ol>
+<p>This ensures errors from the same code path group together even if minor details
+(like user input) differ.</p>
+<h2 id="custom-fingerprinting"><a class="header" href="#custom-fingerprinting">Custom Fingerprinting</a></h2>
+<p>Override default grouping by setting a fingerprint when reporting the error.</p>
+<p>Ruby example (group all payment failures together):</p>
+<pre><code class="language-ruby">rescue StandardError =&gt; e
+  Sentry.capture_exception(e, fingerprint: ["payment-failure"])
+end
+</code></pre>
+<p>Dynamic example:</p>
+<pre><code class="language-ruby">action = current_action  # e.g., "checkout"
+Sentry.capture_exception(e, fingerprint: ["error", action])
+</code></pre>
+<p>All matching fingerprints land in the same issue.</p>
+<h2 id="manual-merging"><a class="header" href="#manual-merging">Manual Merging</a></h2>
+<p>If similar errors end up in separate groups:</p>
+<ol>
+<li>Open the target (main) error group.</li>
+<li>Click Merge.</li>
+<li>Paste the URLs of the groups to merge in.</li>
+<li>Confirm.</li>
+</ol>
+<p>Future reports matching either original group go to the combined one. This
+action is irreversible.</p>
+<h2 id="grouping-details"><a class="header" href="#grouping-details">Grouping Details</a></h2>
+<p>On any error report, click the square-stack icon to view:</p>
+<ul>
+<li>Fingerprint hash</li>
+<li>Method used (backtrace, exception, message, custom)</li>
+<li>Specific frames or message that determined grouping</li>
+<li>Any merged groups</li>
+</ul>
+<p>Useful for understanding or debugging unexpected grouping behavior.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="notes-and-collaboration"><a class="header" href="#notes-and-collaboration">Notes and Collaboration</a></h1>
+<p>Notes let team members comment on an error group, share context, attach files,
+and track progress toward resolution.</p>
+<h2 id="viewing-notes"><a class="header" href="#viewing-notes">Viewing Notes</a></h2>
+<p>In the error group page, open the <strong>Notes</strong> section.</p>
+<p>Each note shows:</p>
+<ul>
+<li>Author avatar/name and timestamp</li>
+<li>Text content (links are auto-detected)</li>
+<li>Attached files (images as thumbnails, others with icons and download links)</li>
+</ul>
+<p>The first attachment on the group becomes the issue’s thumbnail in the dashboard list.</p>
+<h2 id="adding-notes"><a class="header" href="#adding-notes">Adding Notes</a></h2>
+<ol>
+<li>Scroll to <strong>Add a new note</strong> at the bottom.</li>
+<li>Write your comment.</li>
+<li>Attach files via <strong>Attach files</strong> or drag-and-drop (multiple supported).</li>
+<li>Click <strong>Add note</strong>.</li>
+</ol>
+<p>Progress is shown for large uploads.</p>
+<h2 id="managing-notes"><a class="header" href="#managing-notes">Managing Notes</a></h2>
+<ul>
+<li>Notes cannot be edited after posting (delete and repost if needed).</li>
+<li>Only the author can delete their own note.</li>
+<li>Admins can purge all attachments project-wide from <strong>Project Settings</strong> &gt;
+<strong>Danger Zone</strong> (irreversible, runs in background).</li>
+</ul>
+<p><strong>Pro tip:</strong> Use notes for reproduction steps, links to PRs or tickets,
+screenshots, log files, or “fixed in deploy X” updates.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="owning-errors"><a class="header" href="#owning-errors">Owning Errors</a></h1>
+<p><strong>Owning an error</strong> (also called “claiming” or “assigning ownership”) lets a team member publicly indicate they are responsible for investigating or fixing a specific error group. It is a lightweight triage tool that helps coordinate work across the team.</p>
+<h3 id="how-ownership-works"><a class="header" href="#how-ownership-works">How Ownership Works</a></h3>
+<ul>
+<li>Ownership is assigned to a <strong>single user</strong> per error group.</li>
+<li>Any team member with access to the project can <strong>claim</strong> an unowned error.</li>
+<li>Only the <strong>current owner</strong> can <strong>unclaim</strong> (release) it.</li>
+<li>When ownership changes, Telebugs automatically adds a system note to the error group:
+<ul>
+<li>“Ownership taken by [User Name].”</li>
+<li>“Ownership released by [User Name].”</li>
+</ul>
+</li>
+<li>The owner’s name (or profile picture) appears as a badge overlay on the error icon in:
+<ul>
+<li><strong>All Errors</strong> dashboard</li>
+<li><strong>All Reports</strong> view</li>
+<li>Individual project dashboards</li>
+<li>The individual error group detail page</li>
+</ul>
+</li>
+<li>Hovering the owner badge shows a popover with the owner’s name (and link to their profile if applicable).</li>
+</ul>
+<p>Ownership does <strong>not</strong> currently affect:</p>
+<ul>
+<li>Notifications (they are still sent according to project/notification rules)</li>
+<li>Permissions (any member can still view, comment, resolve, mute, etc.)</li>
+</ul>
+<p>It is purely a visual and organizational signal.</p>
+<h3 id="how-to-own-or-unclaim-an-error"><a class="header" href="#how-to-own-or-unclaim-an-error">How to Own or Unclaim an Error</a></h3>
+<p>Ownership controls are available on the <strong>individual error group detail page</strong> (the page you reach by clicking an error in All Errors, a project dashboard, etc.).</p>
+<h4 id="on-desktop--wider-screens"><a class="header" href="#on-desktop--wider-screens">On desktop / wider screens</a></h4>
+<p>The <strong>Own it</strong> or <strong>Unclaim</strong> button appears in the header actions area (usually near Resolve and Mute buttons).</p>
+<h4 id="on-mobile--narrow-screens"><a class="header" href="#on-mobile--narrow-screens">On mobile / narrow screens</a></h4>
+<p>The buttons are shown prominently below the error header:</p>
+<ul>
+<li>If unowned: a button labeled <strong>Own it</strong> with a hand-raised icon.</li>
+<li>If you are the owner: a button labeled <strong>Unclaim</strong> with an X icon.</li>
+</ul>
+<p>Clicking <strong>Own it</strong> immediately claims the error for you.
+Clicking <strong>Unclaim</strong> immediately releases ownership.</p>
+<p>No confirmation dialog is required — the action is fast and reversible.</p>
+<h3 id="best-practices"><a class="header" href="#best-practices">Best Practices</a></h3>
+<ul>
+<li>Claim an error when you start actively working on it.</li>
+<li>Unclaim it if you hand it off to someone else or stop working on it.</li>
+<li>Use ownership together with notes to communicate status (“I’m debugging this now”, “Waiting on backend team”, etc.).</li>
+</ul>
+<p>This simple ownership system helps avoid duplicated effort and makes it easy to see at a glance who is handling each issue.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="muting-and-snoozing"><a class="header" href="#muting-and-snoozing">Muting and Snoozing</a></h1>
+<p><strong>Muting</strong> (also called “snoozing” for temporary periods) allows you to silence
+notifications for a specific error group. This is useful when:</p>
+<ul>
+<li>An error is known and low-priority.</li>
+<li>You’re waiting on a third-party fix.</li>
+<li>The error is noisy but not urgent.</li>
+</ul>
+<p>When an error group is muted, <strong>no notifications</strong> (email, push, or webhook)
+will be sent for new reports in that group, regardless of your notification
+rules.</p>
+<h3 id="types-of-muting"><a class="header" href="#types-of-muting">Types of Muting</a></h3>
+<p>There are two forms:</p>
+<ul>
+<li>
+<p><strong>Temporary Snooze</strong> – Silence notifications for a fixed duration. Available
+durations:</p>
+<ul>
+<li>1 hour</li>
+<li>4 hours</li>
+<li>8 hours</li>
+<li>1 day</li>
+<li>3 days</li>
+<li>After the time expires, notifications automatically resume.</li>
+</ul>
+</li>
+<li>
+<p><strong>Permanent Mute</strong> (“Forever”) – Silence notifications indefinitely until
+manually unmuted.</p>
+</li>
+</ul>
+<h3 id="how-muting-works"><a class="header" href="#how-muting-works">How Muting Works</a></h3>
+<ul>
+<li>Muting applies to the <strong>entire error group</strong>.</li>
+<li>Any team member with access to the project can mute or unmute.</li>
+<li>When an error is muted or unmuted, Telebugs automatically adds a system note:
+<ul>
+<li>“Error muted by [User Name].”</li>
+<li>“Error unmuted by [User Name].”</li>
+</ul>
+</li>
+<li>A badge appears on the error icon in all views (<strong>All Errors</strong>, <strong>All
+Reports</strong>, project dashboards, group detail) showing:
+<ul>
+<li>Bell-snooze icon for temporary snooze</li>
+<li>Bell-slash icon for permanent mute</li>
+</ul>
+</li>
+<li>Hovering the badge reveals a popover with who muted it and (for snoozes) when
+it will resume.</li>
+</ul>
+<h3 id="how-to-mute-or-unmute-an-error"><a class="header" href="#how-to-mute-or-unmute-an-error">How to Mute or Unmute an Error</a></h3>
+<p>Controls are available on the <strong>individual error group detail page</strong>.</p>
+<h4 id="on-desktop--wider-screens-1"><a class="header" href="#on-desktop--wider-screens-1">On desktop / wider screens</a></h4>
+<p>The <strong>Mute…</strong> button appears in the header actions (next to Own it / Resolve).
+Clicking it opens a dropdown with duration options, including <strong>Forever</strong>.</p>
+<h4 id="on-mobile--narrow-screens-1"><a class="header" href="#on-mobile--narrow-screens-1">On mobile / narrow screens</a></h4>
+<p>A prominent <strong>Mute…</strong> button is shown below the error header.
+Tapping it opens a bottom sheet menu with the same duration options.</p>
+<h4 id="unmuting--unsnoozing"><a class="header" href="#unmuting--unsnoozing">Unmuting / Unsnoozing</a></h4>
+<p>If the error is currently muted:</p>
+<ul>
+<li>The button changes to <strong>Unmute</strong> (permanent mute) or <strong>Unsnooze</strong> (temporary).</li>
+<li>Clicking/tapping it immediately removes the mute and resumes notifications.</li>
+</ul>
+<h3 id="important-notes"><a class="header" href="#important-notes">Important Notes</a></h3>
+<ul>
+<li>Muting only affects <strong>notifications</strong> — new reports are still recorded,
+grouped, and visible in dashboards.</li>
+<li>Resolved errors can still be muted (useful for preventing notifications if
+they regress; see <a href="/error-reports-04-owning-errors.html">Owning Errors</a> for related triage).</li>
+<li>If a muted error receives new reports after being resolved, it will
+automatically become unresolved (as with any error), but notifications will
+remain suppressed until unmuted.</li>
+</ul>
+<p>Use muting responsibly to reduce noise while keeping full visibility into your
+error stream.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="data-retention"><a class="header" href="#data-retention">Data Retention</a></h1>
+<p>Data retention in Telebugs helps you control how long <a href="/error-reports-00.html">error reports</a> and
+artifacts (like <a href="/source-maps-00.html">source maps</a>) are kept. Automatic policies clean up old data
+based on time or disk usage, keeping storage manageable and supporting
+compliance needs.</p>
+<p>Cleanup jobs run nightly at 2 AM server time. You can also trigger manual purges
+immediately.</p>
+<p>This chapter covers error and artifact retention policies, purge types, and
+monitoring disk usage.</p>
+<h2 id="error-retention-policy"><a class="header" href="#error-retention-policy">Error Retention Policy</a></h2>
+<p>Error retention controls how long reports and their details (backtraces,
+breadcrumbs, tags, notes, etc.) are stored.</p>
+<p>Enable automatic cleanup to prevent unlimited growth.</p>
+<h3 id="enabling-error-retention"><a class="header" href="#enabling-error-retention">Enabling Error Retention</a></h3>
+<p>Go to <strong>Settings</strong> &gt; <strong>Data Retention</strong>.</p>
+<p>Toggle <strong>Enable automatic error cleanup</strong> and save. The UI shows when the next
+cleanup will run.</p>
+<h3 id="time-based-cleanup"><a class="header" href="#time-based-cleanup">Time-Based Cleanup</a></h3>
+<p>Delete reports older than a set number of days.</p>
+<p>Choose:</p>
+<ul>
+<li><strong>Full purge</strong>: Removes everything (including notes and attachments).
+Historical details are lost.</li>
+<li><strong>Partial purge</strong>: Keeps basic metadata for graphs and counts, but deletes
+heavy details like stack traces and contexts.</li>
+</ul>
+<p><strong>Example:</strong> A 90-day partial purge keeps stats for reports older than 90 days but
+removes the full payloads.</p>
+<h3 id="disk-based-cleanup"><a class="header" href="#disk-based-cleanup">Disk-Based Cleanup</a></h3>
+<p>Triggers when the database file grows too large (full purge only, oldest reports
+first).</p>
+<p>Set limit as:</p>
+<ul>
+<li>Absolute size (e.g., 10 GB)</li>
+<li>Percentage of total disk (e.g., 35%)</li>
+</ul>
+<p>Runs alongside time-based rules if both are enabled.</p>
+<h2 id="artifact-retention-policy"><a class="header" href="#artifact-retention-policy">Artifact Retention Policy</a></h2>
+<p>Artifacts (mainly source maps attached to releases) have separate retention
+rules.</p>
+<h3 id="enabling-artifact-retention"><a class="header" href="#enabling-artifact-retention">Enabling Artifact Retention</a></h3>
+<p>In <strong>Settings</strong> &gt; <strong>Data Retention</strong>, toggle <strong>Enable automatic artifact
+cleanup</strong>.</p>
+<h3 id="time-based-artifact-cleanup"><a class="header" href="#time-based-artifact-cleanup">Time-Based Artifact Cleanup</a></h3>
+<p>Deletes artifacts from releases older than the set period, but only if no recent
+error reports reference them.</p>
+<h3 id="disk-based-artifact-cleanup"><a class="header" href="#disk-based-artifact-cleanup">Disk-Based Artifact Cleanup</a></h3>
+<p>Triggers when total artifact storage exceeds the limit (absolute GB or
+percentage).</p>
+<p>Deletes from oldest inactive releases first.</p>
+<h3 id="purge-on-new-release"><a class="header" href="#purge-on-new-release">Purge on New Release</a></h3>
+<p>Optional: When uploading a new release, automatically delete artifacts from
+excess old releases (keep only the newest N, e.g., 20).</p>
+<p>Oldest inactive releases are removed first.</p>
+<h2 id="monitoring-and-maintenance"><a class="header" href="#monitoring-and-maintenance">Monitoring and Maintenance</a></h2>
+<p>The <strong>Data Retention</strong> section shows live stats:</p>
+<ul>
+<li>Total and free disk space</li>
+<li>Database size and percentage used</li>
+<li>Artifact size and count</li>
+<li>Total report count</li>
+</ul>
+<p>Stats refresh automatically after cleanups.</p>
+<p>Telebugs runs a nightly <code>VACUUM</code> job to reclaim unused space when there’s enough
+free disk (database size + 10% buffer).</p>
+<p><strong>Important:</strong> All automatic and manual purges are irreversible. Export critical
+data if needed before cleanup.</p>
+<p>For quick cleanup, use the <strong>Danger Zone</strong> in <a href="/projects-04-project-settings.html">project settings</a> to purge all
+error data or note attachments manually.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="service-messages"><a class="header" href="#service-messages">Service Messages</a></h1>
+<p>Service Messages guide admins through important maintenance tasks (like database
+optimization or post-update cleanup) directly in the dashboard. No command-line
+access is required.</p>
+<p>Pending messages show as a red badge on your profile picture in the top-right
+corner (visible only to admins). Once all messages are addressed, the badge
+disappears for everyone.</p>
+<h2 id="accessing-service-messages"><a class="header" href="#accessing-service-messages">Accessing Service Messages</a></h2>
+<ol>
+<li>Click your profile picture in the top-right.</li>
+<li>Look for the <strong>Service Messages</strong> entry in the dropdown (highlighted with the
+red badge if pending).</li>
+</ol>
+<p>The index page lists all messages in a simple table with titles and statuses.
+Click a title for details.</p>
+<h2 id="message-statuses"><a class="header" href="#message-statuses">Message Statuses</a></h2>
+<p>Each message has one of these statuses:</p>
+<ul>
+<li><strong>Needs action</strong> (gray): Requires admin input.</li>
+<li><strong>In progress</strong> (orange): Background job running.</li>
+<li><strong>Completed</strong> (green): Finished successfully.</li>
+<li><strong>Failed</strong> (red): Something went wrong.</li>
+</ul>
+<h2 id="viewing-a-message"><a class="header" href="#viewing-a-message">Viewing a Message</a></h2>
+<p>The detail page shows:</p>
+<ul>
+<li><strong>Title</strong> and <strong>Description</strong> (what the task does and why it matters)</li>
+<li><strong>Status</strong> with color tag</li>
+<li><strong>First read by</strong> (admin and timestamp)</li>
+<li><strong>Started by</strong> and <strong>Started at</strong></li>
+<li><strong>Completed at</strong> (if finished)</li>
+<li><strong>Error message</strong> (if failed)</li>
+</ul>
+<p>If the status is <strong>Needs action</strong> or <strong>Failed</strong>, a <strong>Run Action</strong> button appears
+at the bottom.</p>
+<p>Clicking <strong>Run Action</strong> automatically marks the message as read and clears your
+badge (the badge is shared across all admins).</p>
+<h2 id="running-an-action"><a class="header" href="#running-an-action">Running an Action</a></h2>
+<p>Only admins can start actions, and only when the status allows it.</p>
+<p>After clicking <strong>Run Action</strong>:</p>
+<ul>
+<li>Status changes to <strong>In progress</strong>.</li>
+<li>The task runs asynchronously in the background.</li>
+<li>A notice warns it may take time (e.g., up to an hour for large datasets).</li>
+</ul>
+<p>Refresh the page to see updates. When finished, the status becomes <strong>Completed</strong>
+or <strong>Failed</strong>, with timestamps and any error details.</p>
+<p><strong>Quick tip:</strong> Address service messages promptly after upgrades to keep your instance running smoothly.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="appendix"><a class="header" href="#appendix">Appendix</a></h1>
+<p>The following sections contain reference material you may find useful in your
+Telebugs journey.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="software-license-agreement"><a class="header" href="#software-license-agreement">Software License Agreement</a></h1>
+<p>Copyright © 2025, Kyrylo Silin PE.</p>
+<p>Permission is hereby granted to any person purchasing or receiving a copy of
+Telebugs, its source code and associated documentation files (the “Software”),
+to install and use a single instance and modify a single version of the Software
+as provided. This does not include the rights to publish, distribute,
+sublicense, and/or sell copies of the Software, source code or products derived
+from it.</p>
+<p>THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
+FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
+IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</p>
+<p>The user of the software represents and warrants that they will at all times
+comply with applicable law in their download and use of the Software.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="telebugs-command-reference"><a class="header" href="#telebugs-command-reference"><code>telebugs</code> command reference</a></h1>
+<p>Install and manage your Telebugs instance.</p>
+<p>To run the <code>telebugs</code> command, connect to your server using SSH or your cloud
+provider’s web-based terminal.</p>
+<h2 id="usage"><a class="header" href="#usage">Usage</a></h2>
+<ul>
+<li><code>telebugs</code> — Displays the main menu with available commands.</li>
+</ul>
+<h2 id="manage-passwords"><a class="header" href="#manage-passwords">Manage passwords</a></h2>
+<ul>
+<li><code>password</code> — Manage passwords.</li>
+</ul>
+<h2 id="manage-automatic-updates"><a class="header" href="#manage-automatic-updates">Manage automatic updates</a></h2>
+<ul>
+<li><code>auto-update</code> — Manage automatic updates.</li>
+</ul>
+<h2 id="manage-application-data"><a class="header" href="#manage-application-data">Manage application data</a></h2>
+<ul>
+<li><code>data</code> — Manage application data.</li>
+</ul>
+<h2 id="additional-commands"><a class="header" href="#additional-commands">Additional commands</a></h2>
+<ul>
+<li><code>help</code> — Displays help information for the <code>telebugs</code> command.</li>
+<li><code>setup</code> — Runs the initial setup process for Telebugs.</li>
+<li><code>start</code> — Start Telebugs.</li>
+<li><code>stop</code> — Stop Telebugs.</li>
+<li><code>status</code> — Displays the current status of the Telebugs instance.</li>
+<li><code>update</code> — Update Telebugs to the latest version.</li>
+</ul>
+<h2 id="flags"><a class="header" href="#flags">Flags</a></h2>
+<ul>
+<li><code>-h</code>, <code>--help</code> — Displays help information for the <code>telebugs</code> command.</li>
+</ul>
+<p>Use <code>telebugs [command] --help</code> to see detailed help for a specific command.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="supported-platforms-1"><a class="header" href="#supported-platforms-1">Supported platforms</a></h1>
+<p>Telebugs supports error tracking for a wide range of programming languages, frameworks, and platforms through compatibility with Sentry SDKs. By configuring the appropriate Sentry SDK with your Telebugs DSN, you can send error reports from your application to your Telebugs instance.</p>
+<p>Below is an exhaustive list of supported platforms, organized by category, with links to setup instructions from Sentry’s official documentation.</p>
+<h2 id="ruby-and-related-frameworks"><a class="header" href="#ruby-and-related-frameworks">Ruby and related frameworks</a></h2>
+<ul>
+<li><a href="https://docs.sentry.io/platforms/ruby/guides/delayed_job/">DelayedJob</a></li>
+<li><a href="https://docs.sentry.io/platforms/ruby/guides/rack/">Rack Middleware</a></li>
+<li><a href="https://docs.sentry.io/platforms/ruby/guides/resque/">Resque</a></li>
+<li><a href="https://docs.sentry.io/platforms/ruby/">Ruby</a></li>
+<li><a href="https://docs.sentry.io/platforms/ruby/guides/rails/">Ruby on Rails</a></li>
+<li><a href="https://docs.sentry.io/platforms/ruby/guides/sidekiq/">Sidekiq</a></li>
+</ul>
+<h2 id="php-and-related-frameworks"><a class="header" href="#php-and-related-frameworks">PHP and related frameworks</a></h2>
+<ul>
+<li><a href="https://docs.sentry.io/platforms/php/guides/laravel/">Laravel</a></li>
+<li><a href="https://docs.sentry.io/platforms/php/">PHP</a></li>
+<li><a href="https://docs.sentry.io/platforms/php/guides/symfony/">Symfony</a></li>
+</ul>
+<h2 id="javascript-and-related-frameworks"><a class="header" href="#javascript-and-related-frameworks">JavaScript and related frameworks</a></h2>
+<ul>
+<li><a href="https://docs.sentry.io/platforms/javascript/guides/angular/">Angular</a></li>
+<li><a href="https://docs.sentry.io/platforms/javascript/guides/astro/">Astro</a></li>
+<li><a href="https://docs.sentry.io/platforms/javascript/guides/aws-lambda/">AWS Lambda (JavaScript)</a></li>
+<li><a href="https://docs.sentry.io/platforms/javascript/guides/azure-functions/">Azure Functions (JavaScript)</a></li>
+<li><a href="https://docs.sentry.io/platforms/javascript/guides/bun/">Bun</a></li>
+<li><a href="https://docs.sentry.io/platforms/javascript/guides/capacitor/">Capacitor</a></li>
+<li><a href="https://docs.sentry.io/platforms/javascript/guides/cloudflare/">Cloudflare</a></li>
+<li><a href="https://docs.sentry.io/platforms/javascript/guides/connect/">Connect</a></li>
+<li><a href="https://docs.sentry.io/platforms/javascript/guides/cordova/">Cordova</a></li>
+<li><a href="https://docs.sentry.io/platforms/javascript/guides/deno/">Deno</a></li>
+<li><a href="https://docs.sentry.io/platforms/javascript/guides/electron/">Electron</a></li>
+<li><a href="https://docs.sentry.io/platforms/javascript/guides/ember/">Ember</a></li>
+<li><a href="https://docs.sentry.io/platforms/javascript/guides/express/">Express</a></li>
+<li><a href="https://docs.sentry.io/platforms/javascript/guides/fastify/">Fastify</a></li>
+<li><a href="https://docs.sentry.io/platforms/javascript/guides/gatsby/">Gatsby</a></li>
+<li><a href="https://docs.sentry.io/platforms/javascript/guides/google-cloud-functions/">Google Cloud Functions (JavaScript)</a></li>
+<li><a href="https://docs.sentry.io/platforms/javascript/guides/hapi/">Hapi</a></li>
+<li><a href="https://docs.sentry.io/platforms/javascript/guides/hono/">Hono</a></li>
+<li><a href="https://docs.sentry.io/platforms/javascript/">JavaScript</a></li>
+<li><a href="https://docs.sentry.io/platforms/javascript/guides/koa/">Koa</a></li>
+<li><a href="https://docs.sentry.io/platforms/javascript/guides/nestjs/">Nest.js</a></li>
+<li><a href="https://docs.sentry.io/platforms/javascript/guides/nextjs/">Next.js</a></li>
+<li><a href="https://docs.sentry.io/platforms/javascript/guides/node/">Node.js</a></li>
+<li><a href="https://docs.sentry.io/platforms/javascript/guides/nuxt/">Nuxt</a></li>
+<li><a href="https://docs.sentry.io/platforms/react/">React</a></li>
+<li><a href="https://docs.sentry.io/platforms/javascript/guides/react-router/">React Router Framework</a></li>
+<li><a href="https://docs.sentry.io/platforms/javascript/guides/remix/">Remix</a></li>
+<li><a href="https://docs.sentry.io/platforms/javascript/guides/solid/">Solid</a></li>
+<li><a href="https://docs.sentry.io/platforms/javascript/guides/solidstart/">SolidStart</a></li>
+<li><a href="https://docs.sentry.io/platforms/javascript/guides/svelte/">Svelte</a></li>
+<li><a href="https://docs.sentry.io/platforms/javascript/guides/sveltekit/">SvelteKit</a></li>
+<li><a href="https://docs.sentry.io/platforms/javascript/guides/tanstack-react/">TanStack Start React</a></li>
+<li><a href="https://docs.sentry.io/platforms/javascript/guides/vue/">Vue</a></li>
+<li><a href="https://docs.sentry.io/platforms/javascript/guides/wasm/">Wasm</a></li>
+</ul>
+<h2 id="mobile-platforms"><a class="header" href="#mobile-platforms">Mobile platforms</a></h2>
+<ul>
+<li><a href="https://docs.sentry.io/platforms/android/">Android</a></li>
+<li><a href="https://docs.sentry.io/platforms/apple/">Apple</a></li>
+<li><a href="https://docs.sentry.io/platforms/flutter/">Flutter</a></li>
+<li><a href="https://docs.sentry.io/platforms/apple/guides/ios/integrations/">iOS</a></li>
+<li><a href="https://docs.sentry.io/platforms/apple/guides/macos/integrations/">macOS</a></li>
+<li><a href="https://docs.sentry.io/platforms/react-native/">React Native</a></li>
+<li><a href="https://docs.sentry.io/platforms/apple/guides/tvos/integrations/">tvOS</a></li>
+<li><a href="https://docs.sentry.io/platforms/apple/guides/visionos/integrations/">visionOS</a></li>
+<li><a href="https://docs.sentry.io/platforms/apple/guides/watchos/integrations/">watchOS</a></li>
+</ul>
+<h2 id="game-engines"><a class="header" href="#game-engines">Game engines</a></h2>
+<ul>
+<li><a href="https://docs.sentry.io/platforms/godot/">Godot Engine</a></li>
+<li><a href="https://docs.sentry.io/platforms/nintendo-switch/">Nintendo Switch</a></li>
+<li><a href="https://docs.sentry.io/platforms/unity/">Unity</a></li>
+<li><a href="https://docs.sentry.io/platforms/unreal/">Unreal Engine</a></li>
+</ul>
+<h2 id="other-languages-and-frameworks"><a class="header" href="#other-languages-and-frameworks">Other languages and frameworks</a></h2>
+<ul>
+<li><a href="https://docs.sentry.io/platforms/dotnet/">.NET</a></li>
+<li><a href="https://docs.sentry.io/platforms/python/guides/aiohttp/">AIOHTTP</a></li>
+<li><a href="https://docs.sentry.io/platforms/python/guides/anthropic/">Anthropic</a></li>
+<li><a href="https://docs.sentry.io/platforms/python/guides/airflow/">Apache Airflow</a></li>
+<li><a href="https://docs.sentry.io/platforms/python/guides/beam/">Apache Beam</a></li>
+<li><a href="https://docs.sentry.io/platforms/python/guides/spark/">Apache Spark</a></li>
+<li><a href="https://docs.sentry.io/platforms/python/guides/ariadne/">Ariadne</a></li>
+<li><a href="https://docs.sentry.io/platforms/python/guides/arq/">arq</a></li>
+<li><a href="https://docs.sentry.io/platforms/python/guides/asgi/">ASGI</a></li>
+<li><a href="https://docs.sentry.io/platforms/python/guides/asyncio/">asyncio</a></li>
+<li><a href="https://docs.sentry.io/platforms/python/guides/asyncpg/">asyncpg</a></li>
+<li><a href="https://docs.sentry.io/platforms/dotnet/guides/aspnet/">ASP.NET</a></li>
+<li><a href="https://docs.sentry.io/platforms/dotnet/guides/aspnetcore/">ASP.NET Core</a></li>
+<li><a href="https://docs.sentry.io/platforms/dotnet/guides/aws-lambda/">AWS Lambda (.NET)</a></li>
+<li><a href="https://docs.sentry.io/platforms/python/guides/aws-lambda/">AWS Lambda (Python)</a></li>
+<li><a href="https://docs.sentry.io/platforms/dotnet/guides/azure-functions/">Azure Functions (.NET)</a></li>
+<li><a href="https://docs.sentry.io/platforms/dotnet/guides/blazor-webassembly/">Blazor WebAssembly</a></li>
+<li><a href="https://docs.sentry.io/platforms/python/guides/boto3/">Boto3</a></li>
+<li><a href="https://docs.sentry.io/platforms/python/guides/bottle/">Bottle</a></li>
+<li><a href="https://docs.sentry.io/platforms/python/guides/celery/">Celery</a></li>
+<li><a href="https://docs.sentry.io/platforms/python/guides/chalice/">Chalice</a></li>
+<li><a href="https://docs.sentry.io/platforms/python/guides/clickhouse-driver/">clickhouse-driver</a></li>
+<li><a href="https://docs.sentry.io/platforms/python/guides/cloudresourcecontext/">Cloud Resource Context</a></li>
+<li><a href="https://docs.sentry.io/platforms/python/guides/cohere/">Cohere</a></li>
+<li><a href="https://docs.sentry.io/platforms/dart/">Dart</a></li>
+<li><a href="https://docs.sentry.io/platforms/python/guides/default-integrations/">Default Integrations</a></li>
+<li><a href="https://docs.sentry.io/platforms/python/guides/django/">Django</a></li>
+<li><a href="https://docs.sentry.io/platforms/python/guides/dramatiq/">Dramatiq</a></li>
+<li><a href="https://docs.sentry.io/platforms/go/guides/echo/">Echo</a></li>
+<li><a href="https://docs.sentry.io/platforms/elixir/">Elixir</a></li>
+<li><a href="https://docs.sentry.io/platforms/dotnet/guides/entityframework/">Entity Framework</a></li>
+<li><a href="https://docs.sentry.io/platforms/python/guides/falcon/">Falcon</a></li>
+<li><a href="https://docs.sentry.io/platforms/python/guides/fastapi/">FastAPI</a></li>
+<li><a href="https://docs.sentry.io/platforms/go/guides/fasthttp/">FastHTTP</a></li>
+<li><a href="https://docs.sentry.io/platforms/go/guides/fiber/">Fiber</a></li>
+<li><a href="https://docs.sentry.io/platforms/python/guides/flask/">Flask</a></li>
+<li><a href="https://docs.sentry.io/platforms/go/guides/gin/">Gin</a></li>
+<li><a href="https://docs.sentry.io/platforms/python/guides/gnu_backtrace/">GNU Backtrace</a></li>
+<li><a href="https://docs.sentry.io/platforms/go/">Go</a></li>
+<li><a href="https://docs.sentry.io/platforms/native/guides/breakpad/">Google Breakpad</a></li>
+<li><a href="https://docs.sentry.io/platforms/dotnet/guides/google-cloud-functions/">Google Cloud Functions (.NET)</a></li>
+<li><a href="https://docs.sentry.io/platforms/python/integrations/gcp-functions/">Google Cloud Functions (Python)</a></li>
+<li><a href="https://docs.sentry.io/platforms/native/guides/crashpad/">Google Crashpad</a></li>
+<li><a href="https://docs.sentry.io/platforms/python/guides/gql/">GQL</a></li>
+<li><a href="https://docs.sentry.io/platforms/python/guides/graphene/">Graphene</a></li>
+<li><a href="https://docs.sentry.io/platforms/python/guides/grpc/">gRPC</a></li>
+<li><a href="https://docs.sentry.io/platforms/python/guides/httpx/">HTTPX</a></li>
+<li><a href="https://docs.sentry.io/platforms/python/guides/huey/">huey</a></li>
+<li><a href="https://docs.sentry.io/platforms/python/guides/huggingface_hub/">Huggingface Hub</a></li>
+<li><a href="https://docs.sentry.io/platforms/go/guides/iris/">Iris</a></li>
+<li><a href="https://docs.sentry.io/platforms/java/">Java</a></li>
+<li><a href="https://docs.sentry.io/platforms/java/guides/jul/">java.util.logging</a></li>
+<li><a href="https://docs.sentry.io/platforms/kotlin/">Kotlin</a></li>
+<li><a href="https://docs.sentry.io/platforms/kotlin/guides/multiplatform/">Kotlin Multiplatform</a></li>
+<li><a href="https://docs.sentry.io/platforms/python/guides/langchain/">Langchain</a></li>
+<li><a href="https://docs.sentry.io/platforms/python/guides/launchdarkly/">LaunchDarkly</a></li>
+<li><a href="https://docs.sentry.io/platforms/python/guides/litestar/">Litestar</a></li>
+<li><a href="https://docs.sentry.io/platforms/java/guides/log4j2/">Log4j 2.x</a></li>
+<li><a href="https://docs.sentry.io/platforms/java/guides/logback/">Logback</a></li>
+<li><a href="https://docs.sentry.io/platforms/python/guides/logging/">Logging</a></li>
+<li><a href="https://docs.sentry.io/platforms/dotnet/guides/log4net/">log4net</a></li>
+<li><a href="https://docs.sentry.io/platforms/go/guides/logrus/">Logrus</a></li>
+<li><a href="https://docs.sentry.io/platforms/python/guides/loguru/">Loguru</a></li>
+<li><a href="https://docs.sentry.io/platforms/dotnet/guides/maui/">MAUI</a></li>
+<li><a href="https://docs.sentry.io/platforms/dotnet/guides/extensions-logging/">Microsoft.Extensions.Logging</a></li>
+<li><a href="https://docs.sentry.io/platforms/native/guides/minidumps/">Minidumps</a></li>
+<li><a href="https://docs.sentry.io/platforms/native/">Native</a></li>
+<li><a href="https://docs.sentry.io/platforms/go/guides/negroni/">Negroni</a></li>
+<li><a href="https://docs.sentry.io/platforms/go/guides/http/">net/http</a></li>
+<li><a href="https://docs.sentry.io/platforms/dotnet/guides/nlog/">NLog</a></li>
+<li><a href="https://docs.sentry.io/platforms/elixir/integrations/oban/">Oban</a></li>
+<li><a href="https://docs.sentry.io/platforms/python/guides/openai/">OpenAI</a></li>
+<li><a href="https://docs.sentry.io/platforms/python/guides/openfeature/">OpenFeature</a></li>
+<li><a href="https://docs.sentry.io/platforms/elixir/integrations/plug_and_phoenix/">Phoenix</a></li>
+<li><a href="https://docs.sentry.io/platforms/powershell/">PowerShell</a></li>
+<li><a href="https://docs.sentry.io/platforms/python/guides/pure_eval/">pure_eval</a></li>
+<li><a href="https://docs.sentry.io/platforms/python/guides/pymongo/">PyMongo</a></li>
+<li><a href="https://docs.sentry.io/platforms/python/guides/pyramid/">Pyramid</a></li>
+<li><a href="https://docs.sentry.io/platforms/native/guides/qt/">Qt</a></li>
+<li><a href="https://docs.sentry.io/platforms/elixir/integrations/quantum/">Quantum</a></li>
+<li><a href="https://docs.sentry.io/platforms/python/guides/quart/">Quart</a></li>
+<li><a href="https://docs.sentry.io/platforms/python/guides/ray/">Ray</a></li>
+<li><a href="https://docs.sentry.io/platforms/python/guides/redis/">Redis</a></li>
+<li><a href="https://docs.sentry.io/platforms/python/guides/rq/">RQ (Redis Queue)</a></li>
+<li><a href="https://docs.sentry.io/platforms/rust/">Rust</a></li>
+<li><a href="https://docs.sentry.io/platforms/python/guides/rust_tracing/">Rust Tracing</a></li>
+<li><a href="https://docs.sentry.io/platforms/python/guides/sanic/">Sanic</a></li>
+<li><a href="https://docs.sentry.io/platforms/python/guides/serverless/">Serverless</a></li>
+<li><a href="https://docs.sentry.io/platforms/dotnet/guides/serilog/">Serilog</a></li>
+<li><a href="https://docs.sentry.io/platforms/java/guides/servlet/">Servlet</a></li>
+<li><a href="https://docs.sentry.io/platforms/go/guides/slog/">Slog</a></li>
+<li><a href="https://docs.sentry.io/platforms/python/guides/socket/">Socket</a></li>
+<li><a href="https://docs.sentry.io/platforms/java/guides/spring/">Spring</a></li>
+<li><a href="https://docs.sentry.io/platforms/java/guides/spring-boot/">Spring Boot</a></li>
+<li><a href="https://docs.sentry.io/platforms/python/guides/sqlalchemy/">SQLAlchemy</a></li>
+<li><a href="https://docs.sentry.io/platforms/python/guides/starlette/">Starlette</a></li>
+<li><a href="https://docs.sentry.io/platforms/python/guides/statsig/">Statsig</a></li>
+<li><a href="https://docs.sentry.io/platforms/python/guides/strawberry/">Strawberry</a></li>
+<li><a href="https://docs.sentry.io/platforms/python/guides/sys_exit/">sys.exit</a></li>
+<li><a href="https://docs.sentry.io/platforms/python/guides/tornado/">Tornado</a></li>
+<li><a href="https://docs.sentry.io/platforms/python/guides/tryton/">Tryton</a></li>
+<li><a href="https://docs.sentry.io/platforms/python/guides/typer/">Typer</a></li>
+<li><a href="https://docs.sentry.io/platforms/python/guides/unleash/">Unleash</a></li>
+<li><a href="https://docs.sentry.io/platforms/dotnet/guides/uwp/">UWP</a></li>
+<li><a href="https://docs.sentry.io/platforms/native/guides/wasm/">WebAssembly</a></li>
+<li><a href="https://docs.sentry.io/platforms/dotnet/guides/winforms/">Windows Forms</a></li>
+<li><a href="https://docs.sentry.io/platforms/dotnet/guides/wpf/">WPF</a></li>
+<li><a href="https://docs.sentry.io/platforms/python/guides/wsgi/">WSGI</a></li>
+<li><a href="https://docs.sentry.io/platforms/dotnet/guides/xamarin/">Xamarin</a></li>
+<li><a href="https://docs.sentry.io/platforms/go/guides/zerolog/">Zerolog</a></li>
+</ul>
+<p>This list reflects all platforms we currently support. For the most up-to-date information or additional setup details, refer to:</p>
+<p><a href="https://docs.sentry.io/platforms/">https://docs.sentry.io/platforms/</a></p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="installing-on-digitalocean"><a class="header" href="#installing-on-digitalocean">Installing on DigitalOcean</a></h1>
+<p>Using <a href="https://www.digitalocean.com">Digital Ocean</a> to host Telebugs is a great
+choice. It’s affordable and easy to set up.</p>
+<p><strong>After signing up for a Digital Ocean account</strong>, follow these steps. It should
+take about 5 minutes.</p>
+<ol>
+<li>
+<p>In your Digital Ocean account, go to <code>Create &gt; Droplets</code> and pick a plan for
+your server.</p>
+<p><img src="assets/images/appendix-04-installing-on-digital-ocean/01.webp" alt="Creating a new Digital Ocean droplet"></p>
+<p>You need at least 2GB RAM and 1 CPU.</p>
+<p><img src="assets/images/appendix-04-installing-on-digital-ocean/02.webp" alt="Regular CPU with a regular SSD"></p>
+</li>
+<li>
+<p>Set a password to connect to your server.</p>
+<p><img src="assets/images/appendix-04-installing-on-digital-ocean/03.webp" alt="Choosing authentication method"></p>
+</li>
+<li>
+<p>Leave the other settings as they are and click <strong>Create Droplet</strong>. Wait a few
+minutes for it to be ready, then click it.</p>
+<p><img src="assets/images/appendix-04-installing-on-digital-ocean/04.webp" alt="List of droplets for the Telebugs project"></p>
+</li>
+<li>
+<p>Copy the <code>ipv4</code> address. You’ll use it to link your domain to this server.</p>
+<p><img src="assets/images/appendix-04-installing-on-digital-ocean/05.webp" alt="IP v4 address copying"></p>
+<p>Go to your domain provider’s site (like <a href="https://www.godaddy.com/">GoDaddy</a>,
+<a href="https://www.namecheap.com/">namecheap</a>, or
+<a href="https://www.cloudflare.com/">Cloudflare</a>). Log in, find the domain
+management section, and add an <code>A record</code> with the IP you copied. It should
+look like this:</p>
+<p><img src="assets/images/appendix-04-installing-on-digital-ocean/06.webp" alt="A record configuration"></p>
+<p>Ensure that proxying is disabled.</p>
+</li>
+<li>
+<p>Back in Digital Ocean, find your Droplet and open the <strong>Console</strong> to access
+your server.</p>
+<p><img src="assets/images/appendix-04-installing-on-digital-ocean/07.webp" alt="Droplet console link"></p>
+</li>
+<li>
+<p>Check the confirmation email we sent you for the install command. Paste it
+into the command line.</p>
+<p><img src="assets/images/appendix-04-installing-on-digital-ocean/08.webp" alt="Telebugs installation script"></p>
+</li>
+<li>
+<p>When prompted, type your domain name (the same one you used for the A
+record). The system will finish the setup. After a few minutes, you’ll see
+this:</p>
+<p><img src="assets/images/appendix-04-installing-on-digital-ocean/09.webp" alt="Telebugs installation complete"></p>
+</li>
+<li>
+<p>All set! Open the URL in your browser and create your Telebugs account.</p>
+</li>
+</ol>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="installing-on-hetzner"><a class="header" href="#installing-on-hetzner">Installing on Hetzner</a></h1>
+<p>Hosting Writebook on <a href="https://www.hetzner.com/">Hetzner</a> is a smart pick. It’s
+budget-friendly and simple to set up if you’re comfortable with some basic tech
+steps.</p>
+<p><strong>After signing up for a Hetzner account</strong>, follow these steps. It should take
+about 5 minutes.</p>
+<ol>
+<li>
+<p>In your Hetzner account, click <strong>+ Create Server</strong> and pick a plan.</p>
+<p><img src="assets/images/appendix-05-installing-on-hetzner/01.webp" alt="Creating a new Hetzner server"></p>
+<p>You need at least 2GB RAM and 1 CPU.</p>
+<p><img src="assets/images/appendix-05-installing-on-hetzner/02.webp" alt="CPU type selection"></p>
+</li>
+<li>
+<p>Keep the default settings and click <strong>Create and Buy now</strong>. Your server will
+be ready in a few minutes.</p>
+</li>
+<li>
+<p>Once it’s ready, copy the <strong>Public IP</strong> address. This links your domain to
+the server.</p>
+<p><img src="assets/images/appendix-05-installing-on-hetzner/03.webp" alt="Public IP of a server"></p>
+</li>
+<li>
+<p>Go to your domain provider’s site (like <a href="https://www.godaddy.com/">GoDaddy</a>,
+<a href="https://www.namecheap.com/">namecheap</a>, or
+<a href="https://www.cloudflare.com/">Cloudflare</a>). Log in, find the domain
+management section, and add an <code>A record</code> with the IP you copied. It should
+look like this:</p>
+<p><img src="assets/images/appendix-05-installing-on-hetzner/04.webp" alt="A record configuration"></p>
+<p>Ensure that proxying is disabled.</p>
+</li>
+<li>
+<p>Back in Hetzner, open the Console to connect to your server.</p>
+<p><img src="assets/images/appendix-05-installing-on-hetzner/05.webp" alt="The Console option"></p>
+</li>
+<li>
+<p>Check the confirmation email we sent you for the install command. Paste it
+into the command line.</p>
+<p><img src="assets/images/appendix-05-installing-on-hetzner/06.webp" alt="Telebugs installation script"></p>
+</li>
+<li>
+<p>When prompted, type your domain name (the same one you used for the A
+record). The system will finish the setup. After a few minutes, you’ll see
+this:</p>
+<p><img src="assets/images/appendix-05-installing-on-hetzner/07.webp" alt="Telebugs installation complete"></p>
+</li>
+<li>
+<p>All set! Open the URL in your browser and create your Telebugs account.</p>
+</li>
+</ol>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+
+            </nav>
+
+        </div>
+
+        <template id=fa-eye><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM432 256c0 79.5-64.5 144-144 144s-144-64.5-144-144s64.5-144 144-144s144 64.5 144 144zM288 192c0 35.3-28.7 64-64 64c-11.5 0-22.3-3-31.6-8.4c-.2 2.8-.4 5.5-.4 8.4c0 53 43 96 96 96s96-43 96-96s-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6z"/></svg></span></template>
+        <template id=fa-eye-slash><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M38.8 5.1C28.4-3.1 13.3-1.2 5.1 9.2S-1.2 34.7 9.2 42.9l592 464c10.4 8.2 25.5 6.3 33.7-4.1s6.3-25.5-4.1-33.7L525.6 386.7c39.6-40.6 66.4-86.1 79.9-118.4c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C465.5 68.8 400.8 32 320 32c-68.2 0-125 26.3-169.3 60.8L38.8 5.1zM223.1 149.5C248.6 126.2 282.7 112 320 112c79.5 0 144 64.5 144 144c0 24.9-6.3 48.3-17.4 68.7L408 294.5c5.2-11.8 8-24.8 8-38.5c0-53-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6c0 10.2-2.4 19.8-6.6 28.3l-90.3-70.8zm223.1 298L373 389.9c-16.4 6.5-34.3 10.1-53 10.1c-79.5 0-144-64.5-144-144c0-6.9 .5-13.6 1.4-20.2L83.1 161.5C60.3 191.2 44 220.8 34.5 243.7c-3.3 7.9-3.3 16.7 0 24.6c14.9 35.7 46.2 87.7 93 131.1C174.5 443.2 239.2 480 320 480c47.8 0 89.9-12.9 126.2-32.5z"/></svg></span></template>
+        <template id=fa-copy><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M502.6 70.63l-61.25-61.25C435.4 3.371 427.2 0 418.7 0H255.1c-35.35 0-64 28.66-64 64l.0195 256C192 355.4 220.7 384 256 384h192c35.2 0 64-28.8 64-64V93.25C512 84.77 508.6 76.63 502.6 70.63zM464 320c0 8.836-7.164 16-16 16H255.1c-8.838 0-16-7.164-16-16L239.1 64.13c0-8.836 7.164-16 16-16h128L384 96c0 17.67 14.33 32 32 32h47.1V320zM272 448c0 8.836-7.164 16-16 16H63.1c-8.838 0-16-7.164-16-16L47.98 192.1c0-8.836 7.164-16 16-16H160V128H63.99c-35.35 0-64 28.65-64 64l.0098 256C.002 483.3 28.66 512 64 512h192c35.2 0 64-28.8 64-64v-32h-47.1L272 448z"/></svg></span></template>
+        <template id=fa-play><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z"/></svg></span></template>
+        <template id=fa-clock-rotate-left><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M75 75L41 41C25.9 25.9 0 36.6 0 57.9V168c0 13.3 10.7 24 24 24H134.1c21.4 0 32.1-25.9 17-41l-30.8-30.8C155 85.5 203 64 256 64c106 0 192 86 192 192s-86 192-192 192c-40.8 0-78.6-12.7-109.7-34.4c-14.5-10.1-34.4-6.6-44.6 7.9s-6.6 34.4 7.9 44.6C151.2 495 201.7 512 256 512c141.4 0 256-114.6 256-256S397.4 0 256 0C185.3 0 121.3 28.7 75 75zm181 53c-13.3 0-24 10.7-24 24V256c0 6.4 2.5 12.5 7 17l72 72c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-65-65V152c0-13.3-10.7-24-24-24z"/></svg></span></template>
+
+        <!-- Livereload script (if served using the cli tool) -->
+        <script>
+            const wsProtocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
+            const wsAddress = wsProtocol + "//" + location.host + "/" + "__livereload";
+            const socket = new WebSocket(wsAddress);
+            socket.onmessage = function (event) {
+                if (event.data === "reload") {
+                    socket.close();
+                    location.reload();
+                }
+            };
+
+            window.onbeforeunload = function() {
+                socket.close();
+            }
+        </script>
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr-ef4e11c1.min.js"></script>
+        <script src="mark-09e88c2c.min.js"></script>
+        <script src="searcher-c2a407aa.js"></script>
+
+        <script src="clipboard-1626706a.min.js"></script>
+        <script src="highlight-abc7f01d.js"></script>
+        <script src="book-a0b12cfe.js"></script>
+
+        <!-- Custom JS scripts -->
+
+        <script>
+        window.addEventListener('load', function() {
+            window.setTimeout(window.print, 100);
+        });
+        </script>
+
+
+    </div>
+    </body>
+</html>
