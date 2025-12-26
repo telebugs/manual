@@ -1,0 +1,11 @@
+<script>
+  if (window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
+    const script = document.createElement('script');
+    script.defer = true;
+    script.src = 'https://analytics.kyrylo.org/script.js';
+    script.dataset.site = 'KSGIAAC';
+    document.head.appendChild(script);
+  }
+</script>
+
+<script defer data-domain="docs.telebugs.com" src="https://plausible.telebugs.com/js/script.outbound-links.js"></script>

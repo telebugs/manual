@@ -7,7 +7,17 @@
 
 
         <!-- Custom HTML head -->
-
+        <script>
+          if (window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
+            const script = document.createElement('script');
+            script.defer = true;
+            script.src = 'https://analytics.kyrylo.org/script.js';
+            script.dataset.site = 'KSGIAAC';
+            document.head.appendChild(script);
+          }
+        </script>
+        
+        <script defer data-domain="docs.telebugs.com" src="https://plausible.telebugs.com/js/script.outbound-links.js"></script>
         <meta name="description" content="A guide to setting up and using Telebugs, a self-hosted Sentry alternative for error tracking.">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff">
